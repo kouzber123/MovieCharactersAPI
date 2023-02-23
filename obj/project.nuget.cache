@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "KOUtp78lTzYKIUp4G1HuykcPWq8ZyorcYySk4t+f6KgB/Ss+P34V18TGAWeDOwdtszd52AXvVv29XTCRTBAoPw==",
+  "dgSpecHash": "pN3fSZpsksrqyCMW2IdqrfOFNZ9rc6LlhJ/UsK4lebLRjlCCtTGLZUJxAkSEhV2Lngmw6MOranMrTIEt/7U4ZQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\TNguye\\Desktop\\MovieCharactersAPI\\MovieCharactersAPI.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\TNguye\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.14\\microsoft.netcore.app.ref.6.0.14.nupkg.sha512",
+    "C:\\Users\\TNguye\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.14\\microsoft.windowsdesktop.app.ref.6.0.14.nupkg.sha512",
+    "C:\\Users\\TNguye\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.14\\microsoft.aspnetcore.app.ref.6.0.14.nupkg.sha512",
+    "C:\\Users\\TNguye\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.14\\microsoft.netcore.app.host.win-x64.6.0.14.nupkg.sha512"
+  ],
   "logs": []
 }
