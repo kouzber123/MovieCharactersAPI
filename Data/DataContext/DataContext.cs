@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using WebApplication1.Models;
 
 namespace MovieCharactersApp.Data.DataContext
 {
@@ -8,8 +9,8 @@ namespace MovieCharactersApp.Data.DataContext
     {
     }
 
-    // public DbSet<Character> Characters { get; set; }
-    // public DbSet<Movie> Movies { get; set; }
-    // public DbSet<Franchise> Franchises { get; set; }
+    public DbSet<Character> Characters { get; set; }
+    public DbSet<Movie> Movies { get; set; }
+    public DbSet<Franchise> Franchises { get; set; }
   }
 }

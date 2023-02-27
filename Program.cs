@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using MovieCharactersAPI.Extensions;
 using MovieCharactersApp.Data.DataContext;
 using WebApplication1.Models;
 
@@ -10,9 +11,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(
-builder.Configuration.GetConnectionString("Db")
-));
+builder.Services.AddApplicationServices(builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,7 +31,7 @@ using var scope = app.Services.CreateAsyncScope();
 var services = scope.ServiceProvider;
 try
 {
-  var context = services.GetRequiredService<CharactersDbContext>();
+  var context = services.GetRequiredService<DataContext>();
   await context.Database.MigrateAsync();
   await Seed.Seed.SeedCharacters(context);
 }

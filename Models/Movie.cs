@@ -13,16 +13,16 @@ namespace WebApplication1.Models
         public string Title { get; set; }
 
         [Column(TypeName = "nvarchar(40)")]
-        public string? Genre { get; set; }
+        public string Genre { get; set; }
 
         [Column(TypeName = "nvarchar(4)")]
         public int? ReleaseYear { get; set; }
         [Column(TypeName = "nvarchar(40)")]
-        public string? Director { get; set; }
+        public string Director { get; set; }
 
-        public string? Picture { get; set; }
+        public string PictureUrl { get; set; }
 
-        public string? Trailer { get; set; }
+        public string TrailerUrl { get; set; }
 
         public ICollection<Character> Characters { get; set; }
 

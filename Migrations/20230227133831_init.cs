@@ -5,7 +5,7 @@
 namespace MovieCharactersApp.Migrations
 {
     /// <inheritdoc />
-    public partial class initialDb : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,7 +16,7 @@ namespace MovieCharactersApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Fullname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Alias = table.Column<string>(type: "nvarchar(40)", nullable: true),
                     Gender = table.Column<string>(type: "nvarchar(20)", nullable: true),
                     Picture = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -50,8 +50,8 @@ namespace MovieCharactersApp.Migrations
                     Genre = table.Column<string>(type: "nvarchar(40)", nullable: true),
                     ReleaseYear = table.Column<string>(type: "nvarchar(4)", nullable: true),
                     Director = table.Column<string>(type: "nvarchar(40)", nullable: true),
-                    Picture = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Trailer = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TrailerUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FranchiseId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>

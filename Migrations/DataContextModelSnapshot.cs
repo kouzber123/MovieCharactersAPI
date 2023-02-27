@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WebApplication1.Models;
+using MovieCharactersApp.Data.DataContext;
 
 #nullable disable
 
 namespace MovieCharactersApp.Migrations
 {
-    [DbContext(typeof(CharactersDbContext))]
-    partial class CharactersDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(DataContext))]
+    partial class DataContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -48,7 +48,7 @@ namespace MovieCharactersApp.Migrations
                     b.Property<string>("Alias")
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<string>("Fullname")
+                    b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -100,7 +100,7 @@ namespace MovieCharactersApp.Migrations
                     b.Property<string>("Genre")
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<string>("Picture")
+                    b.Property<string>("PictureUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReleaseYear")
@@ -110,7 +110,7 @@ namespace MovieCharactersApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Trailer")
+                    b.Property<string>("TrailerUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
