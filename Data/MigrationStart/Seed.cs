@@ -16,10 +16,12 @@ namespace Seed
 
       var users = JsonSerializer.Deserialize<List<Character>>(userData);
 
-      foreach (var user in users)
+      foreach (var characterData in users)
       {
-        context.Characters.Add(user);
+
+        context.Characters.Add(characterData);
       }
+
       await context.SaveChangesAsync();
     }
   }
