@@ -16,7 +16,7 @@ namespace WebApplication1.Models
         [Column(TypeName = "nvarchar(20)")]
         public string Gender { get; set; }
 
-        public string Picture { get; set; }
+        public string PictureUrl { get; set; }
 
         public ICollection<Movie> Movies { get; set; }
 
