@@ -1,12 +1,12 @@
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
-using MovieCharactersApp.Data.DataContext;
+using WebApplication1.Models;
 
 namespace Seed
 {
   public class Seed
   {
-    public static async Task SeedCharacters(DataContext context)
+    public static async Task SeedCharacters(CharactersDbContext context)
     {
       if (await context.Characters.AnyAsync()) return;
 
