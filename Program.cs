@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MovieCharactersApp.Data.DataContext;
+using WebApplication1.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,7 +32,7 @@ using var scope = app.Services.CreateAsyncScope();
 var services = scope.ServiceProvider;
 try
 {
-  var context = services.GetRequiredService<DataContext>();
+  var context = services.GetRequiredService<CharactersDbContext>();
   await context.Database.MigrateAsync();
   await Seed.Seed.SeedCharacters(context);
 }
