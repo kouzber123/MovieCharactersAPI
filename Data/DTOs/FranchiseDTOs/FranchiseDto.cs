@@ -17,6 +17,6 @@ namespace MovieCharactersAPI.Data.DTOs.FranchiseDTOs
 
     public string Description { get; set; }
 
-    public ICollection<MovieDto> Movies { get; set; }
+    public List<string> Movies { get; set; }
   }
 }

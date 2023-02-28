@@ -2,6 +2,7 @@
 using WebApplication1.Models;
 using MovieCharactersApp.Data.DataContext;
 using Microsoft.EntityFrameworkCore;
+using MovieCharactersAPI.Exceptions;
 
 namespace MovieCharactersAPI.Services
 {
@@ -34,7 +35,7 @@ namespace MovieCharactersAPI.Services
             var franchise = await _context.Franchises.Include(x =>x.Movies).FirstOrDefaultAsync(x => x.Id == id);
             if (franchise == null)
             {
-                throw new Exception(string.Format("not good"));
+                throw new FranchiseNotFoundException(id);
             }
             return franchise;
         }
