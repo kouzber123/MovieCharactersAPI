@@ -1,7 +1,7 @@
-using System.Text.Json;
 using AutoMapper;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using MovieCharactersAPI.Data.DTOs.MoviesDTOs;
+using MovieCharactersAPI.Data.DTOs.MoviesDTOs.CreateMovieDTOs;
 
 namespace MovieCharactersAPI.Controllers
 {
@@ -16,14 +16,14 @@ namespace MovieCharactersAPI.Controllers
     }
 
     [HttpGet("GetAll")]
-    public async Task<ActionResult<IEnumerable<MovieDto>>> GetAll()
+    public async Task<ActionResult<List<GetMovieDto>>> GetAll()
     {
       var movies = await _movieRepository.GetMoviesAsync();
 
       return new OkObjectResult(movies);
     }
     [HttpGet("{id}")]
-    public async Task<ActionResult<MovieDto>> GetbyId(int id)
+    public async Task<ActionResult<GetMovieDto>> GetbyId(int id)
     {
       var movies = await _movieRepository.GetMovieAsync(id);
       // var serialMovie = JsonSerializer.Serialize<MovieDto>(movies);
@@ -32,7 +32,7 @@ namespace MovieCharactersAPI.Controllers
 
     [HttpPost("AddMovie")]
 
-    public async Task<ActionResult<MovieDto>> AddMovie(MovieDto movieDto)
+    public async Task<ActionResult<CreateMovieDto>> AddMovie(CreateMovieDto movieDto)
     {
       var movie = await _movieRepository.CreateMovieAsync(movieDto);
       return new CreatedResult("AddMovie", movie);

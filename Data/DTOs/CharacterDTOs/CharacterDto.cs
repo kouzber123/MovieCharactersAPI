@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using MovieCharactersAPI.Data.DTOs.MoviesDTOs;
 
 namespace MovieCharactersAPI.Data.DTOs.CharacterDTOs
 {

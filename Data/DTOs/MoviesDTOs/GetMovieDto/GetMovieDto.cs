@@ -1,15 +1,12 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 using MovieCharactersAPI.Data.DTOs.CharacterDTOs;
 using MovieCharactersAPI.Data.DTOs.FranchiseDTOs;
+using MovieCharactersAPI.Data.DTOs.MoviesDTOs.GetMovieDto;
 
-namespace MovieCharactersAPI.Data.DTOs.MoviesDTOs
+namespace MovieCharactersAPI
 {
-  public class MovieDto
+  public class GetMovieDto
   {
     public int Id { get; set; }
 
@@ -29,9 +26,9 @@ namespace MovieCharactersAPI.Data.DTOs.MoviesDTOs
 
     public string TrailerUrl { get; set; }
 
-    public List<CharacterDto> Characters { get; set; }
+    public CharacterWithoutMoviesDTO[] Characters { get; set; }
 
     public int? FranchiseId { get; set; }
-    public FranchiseDto Franchise { get; set; }
+    public FranchiseWithoutMoviesDTO Franchise { get; set; }
   }
 }
