@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using MovieCharactersAPI.Repositories.ConcreteRepository;
 using MovieCharactersApp.Data.DataContext;
+using MovieCharactersApp.Repositories.ConcreteRepository;
+using MovieCharactersApp.Repositories.InterfaceRepository;
+using System.Text.Json.Serialization;
 
 namespace MovieCharactersAPI.Extensions
 {
@@ -16,10 +19,14 @@ namespace MovieCharactersAPI.Extensions
 
       });
 
-      //ADD INTERFACE REPO / CONCRETE REPO
+            //ADD INTERFACE REPO / CONCRETE REPO
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+            });
 
-      services.AddCors();
-      //   services.AddScoped<ICharacterRepository, CharacterRepository>();
+            services.AddCors();
+      services.AddScoped<ICharacterRepository, CharacterRepository>();
 
       services.AddScoped<IMovieRepository, MovieRepository>();
 
