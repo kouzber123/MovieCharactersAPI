@@ -2,7 +2,7 @@
 {
     public class FranchiseNotFoundException : Exception
     {
-        public FranchiseNotFoundException(int id) : base($"Brand with id {id} was not found")
+        public FranchiseNotFoundException(int id) : base($"Franchise with id {id} was not found")
         {
 
         }

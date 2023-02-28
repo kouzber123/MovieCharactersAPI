@@ -43,6 +43,58 @@ namespace MovieCharactersAPI.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<ActionResult<Franchise>> CreateFranchise(CreateFranchiseDto createFranchiseDto)
+        {
+            var franchise = _mapper.Map<Franchise>(createFranchiseDto);
+            await _franchiseService.CreateFranchise(franchise);
+            return CreatedAtAction(nameof(GetFranchiseById), new { id = franchise.Id }, franchise);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteFranchise(int id)
+        {
+            try
+            {
+                await _franchiseService.DeleteFranchise(id);
+            }
+            catch (FranchiseNotFoundException ex)
+            {
+                return NotFound(new ProblemDetails
+                {
+                    Detail = ex.Message
+                });
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> PutFranchise(int id, EditFranchiseDto editFranchiseDto)
+        {
+            var franchise = _mapper.Map<Franchise>(editFranchiseDto);
+
+            if (id != franchise.Id) return BadRequest();
+
+            try
+            {
+                await _franchiseService.UpdateFranchise(franchise);
+            }
+            catch (FranchiseNotFoundException ex)
+            {
+                return NotFound(new ProblemDetails
+                {
+                    Detail = ex.Message
+                });
+            }
+
+            return NoContent();
+
+
+
+        }
+
+
 
     }
 
