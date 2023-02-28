@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using MovieCharactersAPI.Data.DTOs.MoviesDTOs;
 
 namespace MovieCharactersAPI.Data.DTOs.FranchiseDTOs
 {
@@ -18,6 +17,6 @@ namespace MovieCharactersAPI.Data.DTOs.FranchiseDTOs
 
     public string Description { get; set; }
 
-     public MovieDto[] Movies { get; set; }
+    public List<string> Movies { get; set; }
   }
 }

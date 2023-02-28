@@ -2,6 +2,7 @@
 using WebApplication1.Models;
 using MovieCharactersApp.Data.DataContext;
 using Microsoft.EntityFrameworkCore;
+using MovieCharactersAPI.Exceptions;
 
 namespace MovieCharactersAPI.Services
 {
@@ -34,8 +35,25 @@ namespace MovieCharactersAPI.Services
             var franchise = await _context.Franchises.Include(x =>x.Movies).FirstOrDefaultAsync(x => x.Id == id);
             if (franchise == null)
             {
-                throw new Exception(string.Format("not good"));
+                throw new FranchiseNotFoundException(id);
             }
+            return franchise;
+        }
+        public async Task DeleteFranchise(int id)
+        {
+            var franchise = await _context.Franchises.FindAsync(id);
+            if (franchise == null) throw new FranchiseNotFoundException(id);
+            _context.Franchises.Remove(franchise);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<Franchise> UpdateFranchise(Franchise franchise)
+        {
+            var foundFranchise = await _context.Franchises.AnyAsync(x => x.Id == franchise.Id);
+            if (!foundFranchise) throw new FranchiseNotFoundException(franchise.Id);
+            
+            _context.Entry(franchise).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
             return franchise;
         }
 
