@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using MovieCharactersApp.Data.DataContext;
 using MovieCharactersApp.Data.DTOs.CharacterDTOs;
 using MovieCharactersApp.Repositories.InterfaceRepository;
+using MovieCharactersApp.Repositories.ConcreteRepository;
 using WebApplication1.Models;
 
 namespace MovieCharactersApp.Controllers
@@ -29,7 +24,7 @@ namespace MovieCharactersApp.Controllers
         }
 
         // GET: api/Characters
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<CharacterReadDto>>> GetAllCharacters()
         {
             return Ok(_mapper.Map<IEnumerable<CharacterReadDto>>(await _characterRepository.GetAllCharacters()));
@@ -39,11 +34,11 @@ namespace MovieCharactersApp.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CharacterReadDto>> GetCharacterById(int id)
         {
-            return Ok(_mapper.Map<IEnumerable<CharacterReadDto>>(await _characterRepository.GetCharacterById(id)));
+            return Ok(_mapper.Map<CharacterReadDto>(await _characterRepository.GetCharacterById(id)));
         }
 
         // POST: api/Characters
-        [HttpPost]
+        [HttpPost("CreateCharacter")]
         public async Task<ActionResult<Character>> CreateCharacter(CharacterCreateDto characterCreateDto)
         {
             var character = _mapper.Map<Character>(characterCreateDto);
@@ -59,9 +54,10 @@ namespace MovieCharactersApp.Controllers
             return NoContent();
         }
 
-        // PUT: 
-        public async Task<IActionResult> PutCharacter(int id, Character character)
+        [HttpPatch("UpdateCharacter/{id}")]
+        public async Task<IActionResult> UpdateCharacter(int id, CharacterUpdateDto characterUpdateDto)
         {
+            var character = _mapper.Map<Character>(characterUpdateDto);
             if (id != character.Id)
             {
                 return BadRequest();

@@ -1,6 +1,7 @@
 using AutoMapper;
 using MovieCharactersAPI.Data.DTOs;
 using MovieCharactersAPI.Data.DTOs.MoviesDTOs;
+using MovieCharactersApp.Data.DTOs.CharacterDTOs;
 using WebApplication1.Models;
 
 namespace MovieCharactersAPI.Models
@@ -21,9 +22,17 @@ namespace MovieCharactersAPI.Models
 
       CreateMap<UpdateMovieDto, Movie>();
       CreateMap<Movie, UpdateMovieDto>();
+      
+      CreateMap<CharacterCreateDto,Character>();
+      CreateMap<Character, CharacterCreateDto>();
+
+            CreateMap<CharacterReadDto, Character>();
+            CreateMap<Character, CharacterReadDto>();
+
+            CreateMap<CharacterUpdateDto, Character>();
+            CreateMap<Character, CharacterUpdateDto>();
 
 
-
-    }
+        }
   }
 }

@@ -31,7 +31,7 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
 
         public async Task<IEnumerable<Character>> GetAllCharacters()
         {
-            return await _context.Characters.Include(x => x.Movies).ToListAsync();
+            return await _context.Characters.Include(x => x.Movies).ThenInclude(m => m.Franchise).ToListAsync();
         }
 
         public async Task<Character> GetCharacterById(int id)
@@ -40,7 +40,7 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
 
             if(character == null)
             {
-                return null;
+                throw new Exception(String.Format("Character doesn't exist"));
             }
             else
             {
