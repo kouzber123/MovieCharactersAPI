@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace MovieCharactersAPI.Data.DTOs.FranchiseDTOs
+namespace MovieCharactersAPI.Data.DTOs.MoviesDTOs.GetMovieDto
 {
-  public class FranchiseDto
+  public class FranchiseWithoutMoviesDTO
   {
     public int Id { get; set; }
 
@@ -16,7 +12,5 @@ namespace MovieCharactersAPI.Data.DTOs.FranchiseDTOs
     public string Name { get; set; }
 
     public string Description { get; set; }
-
-     public MovieDto[] Movies { get; set; }
   }
 }

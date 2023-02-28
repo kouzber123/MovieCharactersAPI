@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MovieCharactersAPI.Data.DTOs.CharacterDTOs
+namespace MovieCharactersAPI.Data.DTOs.MoviesDTOs.GetMovieDto
 {
-  public class CharacterDto
+  public class CharacterWithoutMoviesDTO
   {
     public int Id { get; set; }
 
@@ -17,7 +17,5 @@ namespace MovieCharactersAPI.Data.DTOs.CharacterDTOs
     public string Gender { get; set; }
 
     public string PictureUrl { get; set; }
-
-    public ICollection<MovieDto> Movies { get; set; }
   }
 }

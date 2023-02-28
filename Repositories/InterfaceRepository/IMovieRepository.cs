@@ -4,10 +4,10 @@ namespace MovieCharactersAPI
 {
   public interface IMovieRepository
   {
-    Task<List<MovieDto>> GetAll();
-    Task<MovieDto> GetById(int id);
-    Task<MovieDto> Add(MovieDto MovieDto);
-    Task<bool> Delete(int id);
-    Task<bool> Update(int id, MovieDto MovieDto);
+    Task<List<MovieDto>> GetMoviesAsync();
+    Task<MovieDto> GetMovieAsync(int id);
+    Task<MovieDto> CreateMovieAsync(MovieDto MovieDto);
+    Task<bool> DeleteMovieAsync(int id);
+    Task<bool> UpdateMovieAsync(int id, MovieDto MovieDto);
   }
 }
