@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using MovieCharactersAPI.Extensions;
 using MovieCharactersApp.Data.DataContext;
 using WebApplication1.Models;
+using MovieCharactersAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddTransient<IFranchiseService, FranchiseService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
