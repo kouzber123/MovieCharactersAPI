@@ -1,68 +1,76 @@
-// using AutoMapper;
-// using Microsoft.AspNetCore.Mvc;
-// using MovieCharactersAPI.Data.DTOs.MoviesDTOs;
+using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using MovieCharactersAPI.Data.DTOs.MoviesDTOs;
+using MovieCharactersAPI.Data.DTOs.MoviesDTOs.CreateMovieDTOs;
 
-// namespace MovieCharactersAPI.Controllers
-// {
-//   public class MovieController : BaseApiController
-//   {
-//     private readonly IMovieRepository _movieRepository;
-//     private readonly IMapper _mapper;
-//     public MovieController(IMovieRepository movieRepository, IMapper mapper)
-//     {
-//       _mapper = mapper;
-//       _movieRepository = movieRepository;
-//     }
+namespace MovieCharactersAPI.Controllers
+{
+  public class MovieController : BaseApiController
+  {
+    private readonly IMovieRepository _movieRepository;
+    private readonly IMapper _mapper;
+    public MovieController(IMovieRepository movieRepository, IMapper mapper)
+    {
+      _mapper = mapper;
+      _movieRepository = movieRepository;
+    }
 
-//     [HttpGet("GetAll")]
-//     public async Task<ActionResult<IEnumerable<MovieListDto>>> GetAll()
-//     {
-//       var movies = await _movieRepository.GetAll();
+    [HttpGet("GetAll")]
+    public async Task<ActionResult<List<GetMovieDto>>> GetAll()
+    {
+      var movies = await _movieRepository.GetMoviesAsync();
 
-//       return Ok(movies);
-//     }
-//     [HttpGet("{id}")]
-//     public async Task<ActionResult<MovieDto>> GetbyId(int id)
-//     {
-//       var movies = await _movieRepository.GetById(id);
+      return new OkObjectResult(movies);
+    }
+    [HttpGet("{id}")]
+    public async Task<ActionResult<GetMovieDto>> GetbyId(int id)
+    {
+      var movies = await _movieRepository.GetMovieAsync(id);
+      // var serialMovie = JsonSerializer.Serialize<MovieDto>(movies);
+      return new OkObjectResult(movies);
+    }
 
-//       return Ok(movies);
-//     }
+    [HttpPost("AddMovie")]
 
-//     [HttpPost("AddMovie")]
+    public async Task<ActionResult<CreateMovieDto>> AddMovie(CreateMovieDto movieDto)
+    {
+      var movie = await _movieRepository.CreateMovieAsync(movieDto);
+      return new CreatedResult("AddMovie", movie);
+    }
 
-//     public async Task<ActionResult<CreateMovieDto>> AddMovie(CreateMovieDto movieDto)
-//     {
-//       var movie = await _movieRepository.Add(movieDto);
-//       return CreatedAtAction(nameof(GetbyId), new { Id = movie.Id }, movie);
-//     }
+    [HttpDelete("DeleteMovie/{id}")]
+    public async Task<ActionResult> Delete(int id)
+    {
+      try
+      {
+        await _movieRepository.DeleteMovieAsync(id);
+        return new NoContentResult();
+      }
+      catch (ArgumentException ex)
+      {
 
-//     [HttpDelete("DeleteMovie/{id}")]
+        return new NotFoundObjectResult(ex.Message);
+      }
 
-//     public IActionResult Delete(int id)
-//     {
-//       _movieRepository.Delete(id);
+    }
 
-//       return NoContent();
-//     }
+    [HttpPatch("UpdateMovie/{id}")]
 
-//     [HttpPatch("UpdateMovie/{id}")]
+    public async Task<ActionResult> Update(int id, MovieDto movieDto)
+    {
 
-//     public async Task<ActionResult> Update(int id, UpdateMovieDto movieDto)
-//     {
+      try
+      {
+        var res = await _movieRepository.UpdateMovieAsync(id, movieDto);
+        return new OkObjectResult(res);
+      }
+      catch (ArgumentException ex)
+      {
 
-//       try
-//       {
-//         await _movieRepository.Update(id, movieDto);
-//         return NoContent();
-//       }
-//       catch (ArgumentException ex)
-//       {
-
-//         return NotFound(ex.Message);
-//       }
+        return new NotFoundObjectResult(ex.Message);
+      }
 
 
-//     }
-//   }
-// }
+    }
+  }
+}

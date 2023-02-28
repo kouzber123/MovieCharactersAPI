@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using MovieCharactersAPI.Repositories.ConcreteRepository;
 using MovieCharactersApp.Data.DataContext;
 using MovieCharactersApp.Repositories.ConcreteRepository;
 using MovieCharactersApp.Repositories.InterfaceRepository;
@@ -27,7 +28,7 @@ namespace MovieCharactersAPI.Extensions
             services.AddCors();
       services.AddScoped<ICharacterRepository, CharacterRepository>();
 
-      //   services.AddScoped<IMovieRepository, MovieRepository>();
+      services.AddScoped<IMovieRepository, MovieRepository>();
 
       //-------------AUTOMAPPER
       services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
