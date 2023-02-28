@@ -1,13 +1,13 @@
 using AutoMapper;
-using MovieCharactersAPI.Data.DTOs;
-using MovieCharactersAPI.Data.DTOs.CharacterDTOs;
-using MovieCharactersAPI.Data.DTOs.FranchiseDTOs;
-using MovieCharactersAPI.Data.DTOs.MoviesDTOs;
-using MovieCharactersAPI.Data.DTOs.MoviesDTOs.CreateMovieDTOs;
-using MovieCharactersAPI.Data.DTOs.MoviesDTOs.GetMovieDto;
+using MovieCharactersApp.Data.DTOs;
+using MovieCharactersApp.Data.DTOs.CharacterDTOs;
+using MovieCharactersApp.Data.DTOs.FranchiseDTOs;
+using MovieCharactersApp.Data.DTOs.MoviesDTOs;
+using MovieCharactersApp.Data.DTOs.MoviesDTOs.CreateMovieDTOs;
+using MovieCharactersApp.Data.DTOs.MoviesDTOs.GetMovieDto;
 using WebApplication1.Models;
 
-namespace MovieCharactersAPI.Models
+namespace MovieCharactersApp.Models
 {
   public class AutoMapperProfiles : Profile
   {

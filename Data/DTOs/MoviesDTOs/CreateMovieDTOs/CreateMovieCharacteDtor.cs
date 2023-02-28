@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace MovieCharactersAPI
+namespace MovieCharactersApp
 {
   public class CreateMovieCharacterDto
   {

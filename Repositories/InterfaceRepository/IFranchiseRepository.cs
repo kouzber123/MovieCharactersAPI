@@ -1,12 +1,10 @@
-﻿using System;
+﻿using MovieCharactersApp.Data.DTOs.CharacterDTOs;
 using WebApplication1.Models;
-namespace MovieCharactersAPI.Services
+
+namespace MovieCharactersApp.Repositories.InterfaceRepository
 {
-
-
-
-    public interface IFranchiseService
-    {   
+    public interface IFranchiseRepository
+    {
         Task<IEnumerable<Franchise>> GetAllFranchises();
         Task<Franchise> CreateFranchise(Franchise franchise);
         Task<Franchise> GetFranchiseById(int id);

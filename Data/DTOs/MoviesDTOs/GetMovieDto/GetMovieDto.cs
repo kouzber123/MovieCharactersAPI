@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using MovieCharactersAPI.Data.DTOs.CharacterDTOs;
-using MovieCharactersAPI.Data.DTOs.FranchiseDTOs;
-using MovieCharactersAPI.Data.DTOs.MoviesDTOs.GetMovieDto;
+using MovieCharactersApp.Data.DTOs.CharacterDTOs;
+using MovieCharactersApp.Data.DTOs.FranchiseDTOs;
+using MovieCharactersApp.Data.DTOs.MoviesDTOs.GetMovieDto;
 
-namespace MovieCharactersAPI
+namespace MovieCharactersApp
 {
   public class GetMovieDto
   {

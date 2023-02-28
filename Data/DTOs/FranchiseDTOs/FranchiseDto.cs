@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MovieCharactersAPI.Data.DTOs.FranchiseDTOs
+namespace MovieCharactersApp.Data.DTOs.FranchiseDTOs
 {
   public class FranchiseDto
   {

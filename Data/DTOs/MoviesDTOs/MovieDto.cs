@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using MovieCharactersAPI.Data.DTOs.CharacterDTOs;
-using MovieCharactersAPI.Data.DTOs.FranchiseDTOs;
+using MovieCharactersApp.Data.DTOs.CharacterDTOs;
+using MovieCharactersApp.Data.DTOs.FranchiseDTOs;
 
-namespace MovieCharactersAPI.Data.DTOs.MoviesDTOs
+namespace MovieCharactersApp.Data.DTOs.MoviesDTOs
 {
   public class MovieDto
   {

@@ -1,9 +1,9 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using MovieCharactersAPI.Data.DTOs.MoviesDTOs;
-using MovieCharactersAPI.Data.DTOs.MoviesDTOs.CreateMovieDTOs;
+using MovieCharactersApp.Data.DTOs.MoviesDTOs;
+using MovieCharactersApp.Data.DTOs.MoviesDTOs.CreateMovieDTOs;
 
-namespace MovieCharactersAPI.Controllers
+namespace MovieCharactersApp.Controllers
 {
   public class MovieController : BaseApiController
   {

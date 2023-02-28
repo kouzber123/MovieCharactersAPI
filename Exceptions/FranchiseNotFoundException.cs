@@ -1,4 +1,4 @@
-﻿namespace MovieCharactersAPI.Exceptions
+﻿namespace MovieCharactersApp.Exceptions
 {
     public class FranchiseNotFoundException : Exception
     {

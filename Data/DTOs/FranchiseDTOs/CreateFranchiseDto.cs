@@ -1,4 +1,4 @@
-﻿namespace MovieCharactersAPI.Data.DTOs.FranchiseDTOs
+﻿namespace MovieCharactersApp.Data.DTOs.FranchiseDTOs
 {
     public class CreateFranchiseDto
     {

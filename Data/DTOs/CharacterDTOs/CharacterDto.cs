@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using MovieCharactersAPI.Data.DTOs.MoviesDTOs;
+using MovieCharactersApp.Data.DTOs.MoviesDTOs;
 
-namespace MovieCharactersAPI.Data.DTOs.CharacterDTOs
+namespace MovieCharactersApp.Data.DTOs.CharacterDTOs
 {
   public class CharacterDto
   {

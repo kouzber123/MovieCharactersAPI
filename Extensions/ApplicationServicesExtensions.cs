@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using MovieCharactersAPI.Repositories.ConcreteRepository;
+using MovieCharactersApp.Repositories.ConcreteRepository;
 using MovieCharactersApp.Data.DataContext;
 using MovieCharactersApp.Repositories.ConcreteRepository;
 using MovieCharactersApp.Repositories.InterfaceRepository;
 using System.Text.Json.Serialization;
 
-namespace MovieCharactersAPI.Extensions
+namespace MovieCharactersApp.Extensions
 {
   public static class ApplicationServicesExtensions
   {

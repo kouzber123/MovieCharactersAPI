@@ -1,14 +1,14 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using MovieCharactersAPI.Data.DTOs.CharacterDTOs;
-using MovieCharactersAPI.Data.DTOs.FranchiseDTOs;
-using MovieCharactersAPI.Data.DTOs.MoviesDTOs;
-using MovieCharactersAPI.Data.DTOs.MoviesDTOs.CreateMovieDTOs;
-using MovieCharactersAPI.Data.DTOs.MoviesDTOs.GetMovieDto;
+using MovieCharactersApp.Data.DTOs.CharacterDTOs;
+using MovieCharactersApp.Data.DTOs.FranchiseDTOs;
+using MovieCharactersApp.Data.DTOs.MoviesDTOs;
+using MovieCharactersApp.Data.DTOs.MoviesDTOs.CreateMovieDTOs;
+using MovieCharactersApp.Data.DTOs.MoviesDTOs.GetMovieDto;
 using MovieCharactersApp.Data.DataContext;
 using WebApplication1.Models;
 
-namespace MovieCharactersAPI.Repositories.ConcreteRepository
+namespace MovieCharactersApp.Repositories.ConcreteRepository
 {
   public class MovieRepository : IMovieRepository
   {

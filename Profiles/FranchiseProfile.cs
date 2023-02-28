@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using MovieCharactersAPI.Data.DTOs.FranchiseDTOs;
+using MovieCharactersApp.Data.DTOs.FranchiseDTOs;
 using WebApplication1.Models;
 
-namespace MovieCharactersAPI.Profiles
+namespace MovieCharactersApp.Profiles
 {
     public class FranchiseProfile: Profile
     {

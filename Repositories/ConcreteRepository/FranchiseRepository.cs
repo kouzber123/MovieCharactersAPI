@@ -1,26 +1,26 @@
-﻿using System;
-using WebApplication1.Models;
+﻿using Microsoft.EntityFrameworkCore;
 using MovieCharactersApp.Data.DataContext;
-using Microsoft.EntityFrameworkCore;
-using MovieCharactersAPI.Exceptions;
+using MovieCharactersApp.Data.DTOs.FranchiseDTOs;
+using MovieCharactersApp.Repositories.InterfaceRepository;
+using WebApplication1.Models;
+using MovieCharactersApp.Exceptions;
 
-namespace MovieCharactersAPI.Services
+
+
+namespace MovieCharactersApp.Repositories.ConcreteRepository
 {
-
-
-
-    public class FranchiseService : IFranchiseService
+    public class FranchiseRepository : IFranchiseRepository
     {
         private readonly DataContext _context;
 
-        public FranchiseService(DataContext context)
+        public FranchiseRepository(DataContext context)
         {
             _context = context;
         }
 
         public async Task<IEnumerable<Franchise>> GetAllFranchises()
         {
-            return await _context.Franchises.ToListAsync();   
+            return await _context.Franchises.ToListAsync();
         }
 
         public async Task<Franchise> CreateFranchise(Franchise franchise)
@@ -32,7 +32,7 @@ namespace MovieCharactersAPI.Services
 
         public async Task<Franchise> GetFranchiseById(int id)
         {
-            var franchise = await _context.Franchises.Include(x =>x.Movies).FirstOrDefaultAsync(x => x.Id == id);
+            var franchise = await _context.Franchises.Include(x => x.Movies).FirstOrDefaultAsync(x => x.Id == id);
             if (franchise == null)
             {
                 throw new FranchiseNotFoundException(id);
@@ -51,15 +51,10 @@ namespace MovieCharactersAPI.Services
         {
             var foundFranchise = await _context.Franchises.AnyAsync(x => x.Id == franchise.Id);
             if (!foundFranchise) throw new FranchiseNotFoundException(franchise.Id);
-            
+
             _context.Entry(franchise).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return franchise;
         }
-
-
-
-
     }
-
 }

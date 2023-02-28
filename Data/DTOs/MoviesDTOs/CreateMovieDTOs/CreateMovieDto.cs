@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using MovieCharactersAPI.Data.DTOs.FranchiseDTOs;
-using MovieCharactersAPI.Data.DTOs.MoviesDTOs.GetMovieDto;
+using MovieCharactersApp.Data.DTOs.FranchiseDTOs;
+using MovieCharactersApp.Data.DTOs.MoviesDTOs.GetMovieDto;
 
-namespace MovieCharactersAPI.Data.DTOs.MoviesDTOs.CreateMovieDTOs
+namespace MovieCharactersApp.Data.DTOs.MoviesDTOs.CreateMovieDTOs
 {
   public class CreateMovieDto
   {

@@ -1,21 +1,22 @@
-using MovieCharactersAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Models;
-using MovieCharactersAPI.Data.DTOs.FranchiseDTOs;
+using MovieCharactersApp.Data.DTOs.FranchiseDTOs;
 using AutoMapper;
-using MovieCharactersAPI.Exceptions;
+using MovieCharactersApp.Exceptions;
+using MovieCharactersApp.Repositories.InterfaceRepository;
 
 
-namespace MovieCharactersAPI.Controllers
+
+namespace MovieCharactersApp.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
     public class FranchiseController : ControllerBase
     {
-        private readonly IFranchiseService _franchiseService;
+        private readonly IFranchiseRepository _franchiseService;
         private readonly IMapper _mapper;
 
-        public FranchiseController(IFranchiseService franchiseService, IMapper mapper)
+        public FranchiseController(IFranchiseRepository franchiseService, IMapper mapper)
         {
             _franchiseService= franchiseService;
             _mapper = mapper;
