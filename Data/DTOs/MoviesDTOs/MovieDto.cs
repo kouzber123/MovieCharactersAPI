@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using MovieCharactersAPI.Data.DTOs.CharacterDTOs;
 using MovieCharactersAPI.Data.DTOs.FranchiseDTOs;
+using MovieCharactersAPI.Data.DTOs.MoviesDTOs.GetMovieDto;
 
 namespace MovieCharactersAPI
 {
@@ -25,9 +26,9 @@ namespace MovieCharactersAPI
 
     public string TrailerUrl { get; set; }
 
-    public List<CharacterDto> Characters { get; set; }
+    public CharacterWithoutMoviesDTO[] Characters { get; set; }
 
     public int? FranchiseId { get; set; }
-    public FranchiseDto Franchise { get; set; }
+    public FranchiseWithoutMoviesDTO Franchise { get; set; }
   }
 }

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MovieCharactersAPI.Data.DTOs.CharacterDTOs;
 using MovieCharactersAPI.Data.DTOs.FranchiseDTOs;
 using MovieCharactersAPI.Data.DTOs.MoviesDTOs;
+using MovieCharactersAPI.Data.DTOs.MoviesDTOs.GetMovieDto;
 using MovieCharactersApp.Data.DataContext;
 using WebApplication1.Models;
 
@@ -17,9 +18,7 @@ namespace MovieCharactersAPI.Repositories.ConcreteRepository
       _mapper = mapper;
       _dataContext = dataContext;
     }
-
-
-    public async Task<bool> Update(int id, MovieDto movieDto)
+    public async Task<bool> UpdateMovieAsync(int id, MovieDto movieDto)
     {
       var movie = await _dataContext.Movies.Include(c => c.Characters).Include(f => f.Franchise).FirstOrDefaultAsync(m => m.Id == id);
 
@@ -37,29 +36,30 @@ namespace MovieCharactersAPI.Repositories.ConcreteRepository
       return true;
 
     }
-    public async Task<MovieDto> Add(MovieDto MovieDto)
+    public async Task<MovieDto> CreateMovieAsync(MovieDto movieDto)
     {
       //include 1, 2 check if exists then create instance then add
       // var movie = await _dataContext.Movies.Include(m => m.Characters).Include(f => f.Franchise).ToListAsync();
       var existingCharacters = await _dataContext.Characters
-      .Where(c => MovieDto.Characters.Select(mc => mc.FullName).Contains(c.FullName))
+      .Where(c => movieDto.Characters.Select(mc => mc.FullName).Contains(c.FullName))
       .ToListAsync();
 
-      var existingFranchise = await _dataContext.Franchises.FirstOrDefaultAsync(f => f.Name == MovieDto.Franchise.Name);
+      var existingFranchise = await _dataContext.Franchises.FirstOrDefaultAsync(f => f.Name == movieDto.Franchise.Name);
 
+      // _mapper.Map<MovieDto>(movieDto);
       var newMovie = new Movie
       {
-        Title = MovieDto.Title,
-        Genre = MovieDto.Genre,
-        ReleaseYear = MovieDto.ReleaseYear,
-        Director = MovieDto.Director,
-        TrailerUrl = MovieDto.TrailerUrl,
-        PictureUrl = MovieDto.PictureUrl,
+        Title = movieDto.Title,
+        Genre = movieDto.Genre,
+        ReleaseYear = movieDto.ReleaseYear,
+        Director = movieDto.Director,
+        TrailerUrl = movieDto.TrailerUrl,
+        PictureUrl = movieDto.PictureUrl,
         Characters = new List<Character>(),
         Franchise = new Franchise()
       };
       //check if character from movie dto exists already by full name
-      foreach (var character in MovieDto.Characters)
+      foreach (var character in movieDto.Characters)
       {
         //now check if singular character exists in db
         var existingCharacter = existingCharacters.FirstOrDefault(c => c.FullName == character.FullName);
@@ -85,8 +85,8 @@ namespace MovieCharactersAPI.Repositories.ConcreteRepository
           newMovie.Franchise = new Franchise
           {
             Id = 0,
-            Name = MovieDto.Franchise.Name,
-            Description = MovieDto.Franchise.Description
+            Name = movieDto.Franchise.Name,
+            Description = movieDto.Franchise.Description
           };
         };
       }
@@ -94,11 +94,13 @@ namespace MovieCharactersAPI.Repositories.ConcreteRepository
       await _dataContext.SaveChangesAsync();
 
       //return movie
-      var movieDto = _mapper.Map<MovieDto>(newMovie);
-      return movieDto;
+      var newMovieDto = _mapper.Map<MovieDto>(newMovie);
+      return newMovieDto;
     }
 
-    public async Task<bool> Delete(int id)
+
+    // Deletes a single movie.
+    public async Task<bool> DeleteMovieAsync(int id)
     {
       var movie = await _dataContext.Movies.FirstOrDefaultAsync(x => x.Id == id);
 
@@ -110,64 +112,78 @@ namespace MovieCharactersAPI.Repositories.ConcreteRepository
       }
       return false;
     }
-    public async Task<List<MovieDto>> GetAll()
+
+    // Asynchronously returns a list of movies.
+    public async Task<List<MovieDto>> GetMoviesAsync()
     {
       var movies = await _dataContext.Movies
       .Include(c => c.Characters)
       .Include(f => f.Franchise)
       .ToListAsync();
 
-      return movies.Select(m => new MovieDto
-      {
-        Id = m.Id,
-        Title = m.Title,
-        Genre = m.Genre,
-        ReleaseYear = m.ReleaseYear,
-        Director = m.Director,
-        Characters = m.Characters.Select(c => new CharacterDto
-        {
-          Id = c.Id,
-          FullName = c.FullName
-        }).ToList(),
-        Franchise = new FranchiseDto
-        {
-          Id = m.Franchise.Id,
-          Name = m.Franchise.Name
-        }
+      //auto mapper way
+      var movieMap = _mapper.Map<List<MovieDto>>(movies);
+      return movieMap;
 
-      }).ToList();
+  //-----------manual way
+      // return movies.Select(m => new MovieDto
+      // {
+      //   Id = m.Id,
+      //   Title = m.Title,
+      //   Genre = m.Genre,
+      //   ReleaseYear = m.ReleaseYear,
+      //   Director = m.Director,
+      //   Characters = m.Characters.Select(c => new CharacterWithoutMoviesDTO
+      //   {
+      //     Id = c.Id,
+      //     FullName = c.FullName
+      //   }).ToArray(),
+      //   Franchise = new FranchiseWithoutMoviesDTO
+      //   {
+      //     Id = m.Franchise.Id,
+      //     Name = m.Franchise.Name
+      //   }
+
+      // }).ToList();
     }
 
-    public async Task<MovieDto> GetById(int id)
+    // Get a movie.
+    public async Task<MovieDto> GetMovieAsync(int id)
     {
+
       var movie = await _dataContext.Movies
       .Include(c => c.Characters)
       .Include(f => f.Franchise)
-      .FirstOrDefaultAsync(x => x.Id == id);
+      .FirstOrDefaultAsync(m => m.Id == id);
 
-      var movieDto = new MovieDto
-      {
-        Id = movie.Id,
-        Title = movie.Title,
-        Genre = movie.Genre,
-        TrailerUrl = movie.TrailerUrl,
-        PictureUrl = movie.PictureUrl,
-        Director = movie.Director,
-        ReleaseYear = movie.ReleaseYear,
-        Characters = movie.Characters.Select(c => new CharacterDto
-        {
-          FullName = c.FullName
-        }).ToList(),
-        Franchise = new FranchiseDto
-        {
-          Id = movie.Franchise.Id,
-          Name = movie.Franchise.Name,
-          Description = movie.Franchise.Description
-        }
-      };
+      //auto mapper way
+      var movieMap = _mapper.Map<MovieDto>(movie);
+      return movieMap;
 
-      return movieDto;
+      //..........manual way
+      // var movieDto = new MovieDto
+      // {
+      //   Id = movie.Id,
+      //   Title = movie.Title,
+      //   Genre = movie.Genre,
+      //   TrailerUrl = movie.TrailerUrl,
+      //   PictureUrl = movie.PictureUrl,
+      //   Director = movie.Director,
+      //   ReleaseYear = movie.ReleaseYear,
+      //   Characters = movie.Characters.Select(c => new CharacterDto
+      //   {
+      //     FullName = c.FullName
+      //   }).ToList(),
+      //   Franchise = new FranchiseDto
+      //   {
+      //     Id = movie.Franchise.Id,
+      //     Name = movie.Franchise.Name,
+      //     Description = movie.Franchise.Description
+      //   }
+      // };
 
+
+      // return movieDto;
     }
 
   }

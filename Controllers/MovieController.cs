@@ -1,3 +1,4 @@
+using System.Text.Json;
 using AutoMapper;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -17,15 +18,15 @@ namespace MovieCharactersAPI.Controllers
     [HttpGet("GetAll")]
     public async Task<ActionResult<IEnumerable<MovieDto>>> GetAll()
     {
-      var movies = await _movieRepository.GetAll();
+      var movies = await _movieRepository.GetMoviesAsync();
 
-      return movies;
+      return new OkObjectResult(movies);
     }
     [HttpGet("{id}")]
     public async Task<ActionResult<MovieDto>> GetbyId(int id)
     {
-      var movies = await _movieRepository.GetById(id);
-
+      var movies = await _movieRepository.GetMovieAsync(id);
+      // var serialMovie = JsonSerializer.Serialize<MovieDto>(movies);
       return new OkObjectResult(movies);
     }
 
@@ -33,7 +34,7 @@ namespace MovieCharactersAPI.Controllers
 
     public async Task<ActionResult<MovieDto>> AddMovie(MovieDto movieDto)
     {
-      var movie = await _movieRepository.Add(movieDto);
+      var movie = await _movieRepository.CreateMovieAsync(movieDto);
       return new CreatedResult("AddMovie", movie);
     }
 
@@ -42,7 +43,7 @@ namespace MovieCharactersAPI.Controllers
     {
       try
       {
-        await _movieRepository.Delete(id);
+        await _movieRepository.DeleteMovieAsync(id);
         return new NoContentResult();
       }
       catch (ArgumentException ex)
@@ -60,7 +61,7 @@ namespace MovieCharactersAPI.Controllers
 
       try
       {
-        var res = await _movieRepository.Update(id, movieDto);
+        var res = await _movieRepository.UpdateMovieAsync(id, movieDto);
         return new OkObjectResult(res);
       }
       catch (ArgumentException ex)
