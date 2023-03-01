@@ -12,6 +12,6 @@ namespace MovieCharactersApp.Repositories.InterfaceRepository
 
         Task DeleteCharacter(int id);
 
-        Task<Character> UpdateCharacter(int id, Character character); 
+        Task<Character> UpdateCharacter(Character character);
     }
 }

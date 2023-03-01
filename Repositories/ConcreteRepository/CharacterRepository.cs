@@ -57,9 +57,9 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
             }
         }
 
-        public async Task<Character> UpdateCharacter(int id, Character character)
+        public async Task<Character> UpdateCharacter(Character character)
         {
-            var oldCharacter = await _context.Characters.AnyAsync(x => x.Id == id);
+            var oldCharacter = await _context.Characters.AnyAsync(x => x.Id == character.Id);
 
             if (!oldCharacter)
             {
