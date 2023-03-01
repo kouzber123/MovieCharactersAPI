@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
 using MovieCharactersApp.Data.DataContext;
 using MovieCharactersApp.Data.DTOs.CharacterDTOs;
+using MovieCharactersApp.Exceptions;
 using MovieCharactersApp.Repositories.InterfaceRepository;
 using WebApplication1.Models;
 
@@ -9,10 +12,12 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
     public class CharacterRepository : ICharacterRepository
     {
         private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public CharacterRepository(DataContext context)
+        public CharacterRepository(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<Character> AddCharacter(Character character)
@@ -25,6 +30,10 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
         public async Task DeleteCharacter(int id)
         {
             var character = await _context.Characters.FindAsync(id);
+            if (character == null)
+            {
+                throw new CharacterNotFoundException(id);
+            }
             _context.Characters.Remove(character);
             await _context.SaveChangesAsync();
         }
@@ -40,7 +49,7 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
 
             if(character == null)
             {
-                throw new Exception(String.Format("Character doesn't exist"));
+                throw new CharacterNotFoundException(id);
             }
             else
             {
@@ -48,9 +57,18 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
             }
         }
 
-        public Task<Character> UpdateCharacter(Character character)
+        public async Task<Character> UpdateCharacter(int id, Character character)
         {
-            throw new NotImplementedException();
+            var oldCharacter = await _context.Characters.AnyAsync(x => x.Id == id);
+
+            if (!oldCharacter)
+            {
+                throw new CharacterNotFoundException(character.Id);
+            }
+
+            _context.Entry(character).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return character;
         }
     }
 }

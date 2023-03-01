@@ -1,15 +1,14 @@
 using AutoMapper;
-using MovieCharactersAPI.Data.DTOs;
-using MovieCharactersAPI.Data.DTOs.CharacterDTOs;
 using MovieCharactersAPI.Data.DTOs.FranchiseDTOs;
 using MovieCharactersAPI.Data.DTOs.MoviesDTOs;
 using MovieCharactersAPI.Data.DTOs.MoviesDTOs.CreateMovieDTOs;
 using MovieCharactersAPI.Data.DTOs.MoviesDTOs.GetMovieDto;
+using MovieCharactersApp.Data.DTOs.CharacterDTOs;
 using WebApplication1.Models;
 
 namespace MovieCharactersAPI.Models
 {
-  public class AutoMapperProfiles : Profile
+    public class AutoMapperProfiles : Profile
   {
     public AutoMapperProfiles()
     {
@@ -37,7 +36,9 @@ namespace MovieCharactersAPI.Models
       //-----------------------------------------------------------------------
 
       //character map
-      CreateMap<CharacterDto, Character>().ReverseMap();
+      CreateMap<CharacterReadDto, Character>().ReverseMap();
+      CreateMap<CharacterUpdateDto, Character>().ReverseMap();
+      CreateMap<CharacterCreateDto, Character>().ReverseMap();
 
 
       //fransise map

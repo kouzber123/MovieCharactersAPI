@@ -5,6 +5,8 @@ using MovieCharactersApp.Data.DTOs.CharacterDTOs;
 using MovieCharactersApp.Repositories.InterfaceRepository;
 using MovieCharactersApp.Repositories.ConcreteRepository;
 using WebApplication1.Models;
+using MovieCharactersApp.Exceptions;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace MovieCharactersApp.Controllers
 {
@@ -34,7 +36,18 @@ namespace MovieCharactersApp.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CharacterReadDto>> GetCharacterById(int id)
         {
-            return Ok(_mapper.Map<CharacterReadDto>(await _characterRepository.GetCharacterById(id)));
+            try
+            {
+                return Ok(_mapper.Map<CharacterReadDto>(await _characterRepository.GetCharacterById(id)));
+            }
+            catch(CharacterNotFoundException ex)
+            {
+                return NotFound(new ProblemDetails
+                {
+                    Detail = ex.Message
+                });
+            }
+           
         }
 
         // POST: api/Characters
@@ -50,7 +63,17 @@ namespace MovieCharactersApp.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCharacter(int id)
         {
-            await _characterRepository.DeleteCharacter(id);
+            try
+            {
+                await _characterRepository.DeleteCharacter(id);
+            }
+            catch (CharacterNotFoundException ex)
+            {
+                return NotFound(new ProblemDetails
+                {
+                    Detail = ex.Message
+                });
+            }
             return NoContent();
         }
 
@@ -58,13 +81,21 @@ namespace MovieCharactersApp.Controllers
         public async Task<IActionResult> UpdateCharacter(int id, CharacterUpdateDto characterUpdateDto)
         {
             var character = _mapper.Map<Character>(characterUpdateDto);
-            if (id != character.Id)
+
+            try
             {
-                return BadRequest();
+                await _characterRepository.UpdateCharacter(id, character);
             }
-            await _characterRepository.UpdateCharacter(character);
+            catch (CharacterNotFoundException ex)
+            {
+                return NotFound(new ProblemDetails
+                {
+                    Detail = ex.Message
+                });
+            }
             return NoContent();
         }
+
         private bool CharacterExists(int id)
         {
             return _context.Characters.Any(e => e.Id == id);
