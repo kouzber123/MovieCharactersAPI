@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using MovieCharactersAPI.Data.DTOs.FranchiseDTOs;
 using MovieCharactersApp.Data.DTOs.CharacterDTOs;
+using MovieCharactersApp.Data.DTOs.FranchiseDTOs;
 
-namespace MovieCharactersAPI.Data.DTOs.MoviesDTOs
+namespace MovieCharactersApp.Data.DTOs.MoviesDTOs
 {
   public class MovieDto
   {
@@ -28,9 +28,7 @@ namespace MovieCharactersAPI.Data.DTOs.MoviesDTOs
     public string PictureUrl { get; set; }
 
     public string TrailerUrl { get; set; }
-
-    public List<CharacterReadDto> Characters { get; set; }
-
+    public List<CharacterDto> Characters { get; set; }
     public int? FranchiseId { get; set; }
     public FranchiseDto Franchise { get; set; }
   }

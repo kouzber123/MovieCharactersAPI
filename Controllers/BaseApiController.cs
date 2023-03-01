@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace MovieCharactersAPI.Controllers
+namespace MovieCharactersApp.Controllers
 {
 
   // ControllerBase class.

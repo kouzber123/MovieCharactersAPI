@@ -1,10 +1,10 @@
-﻿using Microsoft.Build.Framework;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MovieCharactersApp.Data.DTOs.CharacterDTOs
 {
-    public class CharacterCreateDto
+  public class CharacterCreateDto
     {
         [Required]
         public string FullName { get; set; }

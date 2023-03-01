@@ -1,13 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MovieCharactersAPI.Data.DTOs.MoviesDTOs.GetMovieDto
+namespace MovieCharactersApp.Data.DTOs.MoviesDTOs.GetMovieDto
 {
   public class CharacterWithoutMoviesDTO
   {
     public int Id { get; set; }
 
-    [Required]
     public string FullName { get; set; }
 
     [Column(TypeName = "nvarchar(40)")]

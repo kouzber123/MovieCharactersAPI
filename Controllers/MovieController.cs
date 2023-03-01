@@ -1,16 +1,19 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using MovieCharactersApp.Data.DTOs.MoviesDTOs.CreateMovieDTOs;
 using MovieCharactersAPI.Data.DTOs.MoviesDTOs;
-using MovieCharactersAPI.Data.DTOs.MoviesDTOs.CreateMovieDTOs;
+using MovieCharactersApp.Data.DataContext;
 
-namespace MovieCharactersAPI.Controllers
+namespace MovieCharactersApp.Controllers
 {
   public class MovieController : BaseApiController
   {
     private readonly IMovieRepository _movieRepository;
     private readonly IMapper _mapper;
-    public MovieController(IMovieRepository movieRepository, IMapper mapper)
+    private readonly DataContext _dataContext;
+    public MovieController(IMovieRepository movieRepository, IMapper mapper, DataContext dataContext)
     {
+      _dataContext = dataContext;
       _mapper = mapper;
       _movieRepository = movieRepository;
     }
@@ -29,10 +32,8 @@ namespace MovieCharactersAPI.Controllers
       // var serialMovie = JsonSerializer.Serialize<MovieDto>(movies);
       return new OkObjectResult(movies);
     }
-
     [HttpPost("AddMovie")]
-
-    public async Task<ActionResult<CreateMovieDto>> AddMovie(CreateMovieDto movieDto)
+    public async Task<ActionResult<GetMovieDto>> AddMovie(CreateMovieDto movieDto)
     {
       var movie = await _movieRepository.CreateMovieAsync(movieDto);
       return new CreatedResult("AddMovie", movie);
@@ -54,17 +55,21 @@ namespace MovieCharactersAPI.Controllers
 
     }
 
-    [HttpPatch("UpdateMovie/{id}")]
+    [HttpPut("UpdateMovie/{id}")]
 
-    public async Task<ActionResult> Update(int id, MovieDto movieDto)
+    public async Task<ActionResult> Update(int id, UpdateMovieDto updateMovieDto)
     {
 
+
+      // var movie = _mapper.Map<Movie>(moviedto);
+      // movie.Id = id;
       try
       {
-        var res = await _movieRepository.UpdateMovieAsync(id, movieDto);
+        var res = await _movieRepository.UpdateMovieAsync(id,updateMovieDto);
+
         return new OkObjectResult(res);
       }
-      catch (ArgumentException ex)
+      catch (System.Exception ex)
       {
 
         return new NotFoundObjectResult(ex.Message);
