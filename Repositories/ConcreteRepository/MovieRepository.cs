@@ -8,7 +8,7 @@ using WebApplication1.Models;
 
 namespace MovieCharactersApp.Repositories.ConcreteRepository
 {
-  public class MovieRepository : IMovieRepository
+    public class MovieRepository : IMovieRepository
   {
     private readonly DataContext _dataContext;
     private readonly IMapper _mapper;

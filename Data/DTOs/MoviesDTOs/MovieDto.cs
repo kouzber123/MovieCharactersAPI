@@ -28,7 +28,6 @@ namespace MovieCharactersApp.Data.DTOs.MoviesDTOs
     public string PictureUrl { get; set; }
 
     public string TrailerUrl { get; set; }
-
     public List<CharacterDto> Characters { get; set; }
     public int? FranchiseId { get; set; }
     public FranchiseDto Franchise { get; set; }

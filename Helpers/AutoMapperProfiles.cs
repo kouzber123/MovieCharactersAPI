@@ -9,7 +9,7 @@ using WebApplication1.Models;
 
 namespace MovieCharactersApp.Models
 {
-  public class AutoMapperProfiles : Profile
+    public class AutoMapperProfiles : Profile
   {
     public AutoMapperProfiles()
     {
@@ -47,7 +47,9 @@ namespace MovieCharactersApp.Models
       //-----------------------------------------------------------------------
 
       //character map
-      CreateMap<CharacterDto, Character>().ReverseMap();
+      CreateMap<CharacterReadDto, Character>().ReverseMap();
+      CreateMap<CharacterUpdateDto, Character>().ReverseMap();
+      CreateMap<CharacterCreateDto, Character>().ReverseMap();
 
 
       //fransise map
