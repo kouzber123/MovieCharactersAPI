@@ -8,8 +8,6 @@ namespace MovieCharactersApp.Data.DTOs.MoviesDTOs.GetMovieDto
   {
     [JsonIgnore]
     public int Id { get; set; }
-
-    [Required]
     [Column(TypeName = "nvarchar(40)")]
     public string Name { get; set; }
 

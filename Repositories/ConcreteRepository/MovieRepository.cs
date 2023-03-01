@@ -1,10 +1,8 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MovieCharactersApp.Data.DTOs.CharacterDTOs;
-using MovieCharactersApp.Data.DTOs.FranchiseDTOs;
-using MovieCharactersApp.Data.DTOs.MoviesDTOs;
 using MovieCharactersApp.Data.DTOs.MoviesDTOs.CreateMovieDTOs;
-using MovieCharactersApp.Data.DTOs.MoviesDTOs.GetMovieDto;
+using MovieCharactersAPI.Data.DTOs.MoviesDTOs;
 using MovieCharactersApp.Data.DataContext;
 using WebApplication1.Models;
 
@@ -19,46 +17,60 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
       _mapper = mapper;
       _dataContext = dataContext;
     }
-    public async Task<bool> UpdateMovieAsync(int id, MovieDto movieDto)
+
+    // Updates a movie.
+    public async Task<IActionResult> UpdateMovieAsync(int id, UpdateMovieDto updateMovie)
     {
-      var movie = await _dataContext.Movies.Include(c => c.Characters).Include(f => f.Franchise).FirstOrDefaultAsync(m => m.Id == id);
+      var movie = await _dataContext.Movies.FindAsync(id);
 
-      var character = await _dataContext.Characters.FirstOrDefaultAsync(x => x.Id == id);
-
-      if (character == null)
+      if (movie == null)
       {
-        throw new ArgumentNullException("ID was not found");
+        return new NotFoundResult();
+      }
+      _mapper.Map(updateMovie, movie);
+      var findId = updateMovie.characterWithoutMoviesDTO.Select(i => i.Id).ToList();
+      // var characters = await _dataContext.Characters.Where(c => c.Id == findId)
+
+      foreach (var character in updateMovie.characterWithoutMoviesDTO)
+      {
+        var foundChar = await _dataContext.Characters.FindAsync(character.Id);
+
+        if (foundChar != null)
+        {
+          // _mapper.Map(character, foundChar);er;
+          _mapper.Map(character, foundChar);
+          movie.Characters.Add(foundChar);
+        }
+        else
+        {
+          var newCharacter = _mapper.Map(character, foundChar);
+          newCharacter.Id = 0;
+          _dataContext.Characters.Add(newCharacter);
+          movie.Characters.Add(newCharacter);
+        }
       }
 
-      _mapper.Map(movieDto, movie);
-      _dataContext.Entry(character).State = EntityState.Modified;
+      _dataContext.Entry(movie).State = EntityState.Modified;
+
+      // _dataContext.Movies.Update(movie);
       await _dataContext.SaveChangesAsync();
 
-      return true;
+      return new OkObjectResult(_mapper.Map<GetMovieDto>(updateMovie));
 
     }
-    public async Task<CreateMovieDto> CreateMovieAsync(CreateMovieDto movieDto)
+
+    public async Task<GetMovieDto> CreateMovieAsync(CreateMovieDto movieDto)
     {
-      //include 1, 2 check if exists then create instance then add
-      // var movie = await _dataContext.Movies.Include(m => m.Characters).Include(f => f.Franchise).ToListAsync();
+      //exisitng c
       var existingCharacters = await _dataContext.Characters
       .Where(c => movieDto.Characters.Select(mc => mc.FullName).Contains(c.FullName))
       .ToListAsync();
 
+      //search existing f
       var existingFranchise = await _dataContext.Franchises.FirstOrDefaultAsync(f => f.Name == movieDto.Franchise.Name);
 
-      // _mapper.Map<MovieDto>(movieDto);
-      var newMovie = new Movie
-      {
-        Title = movieDto.Title,
-        Genre = movieDto.Genre,
-        ReleaseYear = movieDto.ReleaseYear,
-        Director = movieDto.Director,
-        TrailerUrl = movieDto.TrailerUrl,
-        PictureUrl = movieDto.PictureUrl,
-        Characters = new List<Character>(),
-        Franchise = new Franchise()
-      };
+      var newMovie = _mapper.Map<Movie>(movieDto);
+
       //check if character from movie dto exists already by full name
       foreach (var character in movieDto.Characters)
       {
@@ -66,43 +78,30 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
         var existingCharacter = existingCharacters.FirstOrDefault(c => c.FullName == character.FullName);
         if (existingCharacter != null)
         {
+          //existing true
           newMovie.Characters.Add(existingCharacter);
+          // newMovie.Characters.Add(existingCharacter);
         }
         if (existingFranchise != null)
         {
           newMovie.Franchise = existingFranchise;
         }
+        //existing false
         else
         {
-          var  characters = _mapper.Map<Character>(movieDto.Characters);
+          var characters = _mapper.Map<Character>(movieDto.Characters);
+
           newMovie.Characters.Add(characters);
+
           newMovie.Franchise = _mapper.Map<Franchise>(movieDto.Franchise);
-          //old way
-          /*
-          new Character
-        {
-          Id = 0,
-          FullName = character.FullName,
-          Alias = character.Alias,
-          Gender = character.Gender,
-          Picture = character.PictureUrl,
-        }
-
-          */
-
-          // newMovie.Franchise = new Franchise
-          // {
-          //   Id = 0,
-          //   Name = movieDto.Franchise.Name,
-          //   Description = movieDto.Franchise.Description
-          // };
         };
       }
+      //do the changes here
       _dataContext.Movies.Add(newMovie);
       await _dataContext.SaveChangesAsync();
 
-      //return movie
-      var newMovieDto = _mapper.Map<CreateMovieDto>(newMovie);
+      //return created movie for user
+      var newMovieDto = _mapper.Map<GetMovieDto>(newMovie);
       return newMovieDto;
     }
 
@@ -130,29 +129,7 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
       .ToListAsync();
 
       //auto mapper way
-      var movieMap = _mapper.Map<List<GetMovieDto>>(movies);
-      return movieMap;
-
-      //-----------manual way
-      // return movies.Select(m => new MovieDto
-      // {
-      //   Id = m.Id,
-      //   Title = m.Title,
-      //   Genre = m.Genre,
-      //   ReleaseYear = m.ReleaseYear,
-      //   Director = m.Director,
-      //   Characters = m.Characters.Select(c => new CharacterWithoutMoviesDTO
-      //   {
-      //     Id = c.Id,
-      //     FullName = c.FullName
-      //   }).ToArray(),
-      //   Franchise = new FranchiseWithoutMoviesDTO
-      //   {
-      //     Id = m.Franchise.Id,
-      //     Name = m.Franchise.Name
-      //   }
-
-      // }).ToList();
+      return _mapper.Map<List<GetMovieDto>>(movies);
     }
 
     // Get a movie.
@@ -167,31 +144,6 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
       //auto mapper way
       var movieMap = _mapper.Map<GetMovieDto>(movie);
       return movieMap;
-
-      //..........manual way
-      // var movieDto = new MovieDto
-      // {
-      //   Id = movie.Id,
-      //   Title = movie.Title,
-      //   Genre = movie.Genre,
-      //   TrailerUrl = movie.TrailerUrl,
-      //   PictureUrl = movie.PictureUrl,
-      //   Director = movie.Director,
-      //   ReleaseYear = movie.ReleaseYear,
-      //   Characters = movie.Characters.Select(c => new CharacterDto
-      //   {
-      //     FullName = c.FullName
-      //   }).ToList(),
-      //   Franchise = new FranchiseDto
-      //   {
-      //     Id = movie.Franchise.Id,
-      //     Name = movie.Franchise.Name,
-      //     Description = movie.Franchise.Description
-      //   }
-      // };
-
-
-      // return movieDto;
     }
 
   }

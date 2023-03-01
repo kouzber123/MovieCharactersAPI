@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MovieCharactersApp.Repositories.ConcreteRepository;
 using MovieCharactersApp.Data.DataContext;
-using MovieCharactersApp.Repositories.ConcreteRepository;
 using MovieCharactersApp.Repositories.InterfaceRepository;
 using System.Text.Json.Serialization;
 

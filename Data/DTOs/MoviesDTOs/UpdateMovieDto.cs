@@ -1,15 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using MovieCharactersApp.Data.DTOs.CharacterDTOs;
-using MovieCharactersApp.Data.DTOs.FranchiseDTOs;
 using MovieCharactersApp.Data.DTOs.MoviesDTOs.GetMovieDto;
 
-namespace MovieCharactersApp
+namespace MovieCharactersAPI.Data.DTOs.MoviesDTOs
 {
-  public class GetMovieDto
+  public class UpdateMovieDto
   {
-
-    public int Id { get; set; }
 
     [Required]
     [Column(TypeName = "nvarchar(100)")]
@@ -26,10 +22,6 @@ namespace MovieCharactersApp
     public string PictureUrl { get; set; }
 
     public string TrailerUrl { get; set; }
-
-    public List<CharacterWithoutMoviesDTO> Characters { get; set; }
-
-    public int? FranchiseId { get; set; }
-    public FranchiseWithoutMoviesDTO Franchise { get; set; }
+    public List<CharacterWithoutMoviesDTO> characterWithoutMoviesDTO { get; set; }
   }
 }
