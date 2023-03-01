@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using MovieCharactersAPI.Data.DTOs.FranchiseDTOs;
 using MovieCharactersAPI.Data.DTOs.MoviesDTOs.GetMovieDto;
 
-namespace MovieCharactersAPI.Data.DTOs.MoviesDTOs.CreateMovieDTOs
+namespace MovieCharactersAPI.Data.DTOs.MoviesDTOs
 {
-  public class CreateMovieDto
+  public class UpdateMovieDto
   {
 
     [Required]
@@ -24,12 +22,10 @@ namespace MovieCharactersAPI.Data.DTOs.MoviesDTOs.CreateMovieDTOs
     public int? ReleaseYear { get; set; }
     [Column(TypeName = "nvarchar(40)")]
     public string Director { get; set; }
+
     public string PictureUrl { get; set; }
+
     public string TrailerUrl { get; set; }
-
-
-    public List<CreateMovieCharacterDto> Characters { get; set; } = new();
-    public int FranchiseId { get; set; }
-    public FranchiseWithoutMoviesDTO Franchise { get; set; } = new();
+    public List<CharacterWithoutMoviesDTO> characterWithoutMoviesDTO { get; set; }
   }
 }

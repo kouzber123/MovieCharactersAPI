@@ -8,6 +8,7 @@ namespace MovieCharactersAPI
 {
   public class GetMovieDto
   {
+
     public int Id { get; set; }
 
     [Required]
@@ -26,7 +27,7 @@ namespace MovieCharactersAPI
 
     public string TrailerUrl { get; set; }
 
-    public CharacterWithoutMoviesDTO[] Characters { get; set; }
+    public List<CharacterWithoutMoviesDTO> Characters { get; set; }
 
     public int? FranchiseId { get; set; }
     public FranchiseWithoutMoviesDTO Franchise { get; set; }

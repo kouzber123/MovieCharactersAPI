@@ -7,7 +7,6 @@ namespace MovieCharactersAPI.Data.DTOs.MoviesDTOs.GetMovieDto
   {
     public int Id { get; set; }
 
-    [Required]
     public string FullName { get; set; }
 
     [Column(TypeName = "nvarchar(40)")]
