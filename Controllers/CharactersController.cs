@@ -77,14 +77,14 @@ namespace MovieCharactersApp.Controllers
             return NoContent();
         }
 
-        [HttpPatch("UpdateCharacter/{id}")]
+        [HttpPut("UpdateCharacter/{id}")]
         public async Task<IActionResult> UpdateCharacter(int id, CharacterUpdateDto characterUpdateDto)
         {
             var character = _mapper.Map<Character>(characterUpdateDto);
 
             try
             {
-                await _characterRepository.UpdateCharacter(id, character);
+                await _characterRepository.UpdateCharacter(character);
             }
             catch (CharacterNotFoundException ex)
             {

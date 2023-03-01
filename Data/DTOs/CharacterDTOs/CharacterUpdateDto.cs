@@ -7,6 +7,9 @@ namespace MovieCharactersApp.Data.DTOs.CharacterDTOs
   public class CharacterUpdateDto
     {
         [Required]
+        public int id { get; set; }
+
+        [Required]
         public string FullName { get; set; }
 
         [Column(TypeName = "nvarchar(40)")]
