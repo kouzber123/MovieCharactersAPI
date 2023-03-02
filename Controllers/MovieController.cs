@@ -1,7 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using MovieCharactersAPI.Data.DTOs.MoviesDTOs;
 using MovieCharactersAPI.Data.DTOs.MoviesDTOs.CreateMovieDTOs;
+using MovieCharactersAPI.Data.DTOs.MoviesDTOs.UpdateMovie;
 using MovieCharactersApp.Data.DataContext;
 
 namespace MovieCharactersAPI.Controllers
@@ -18,14 +18,14 @@ namespace MovieCharactersAPI.Controllers
       _movieRepository = movieRepository;
     }
 
-    [HttpGet("Movies")]
+    [HttpGet("List")]
     public async Task<ActionResult<List<GetMovieDto>>> GetAll()
     {
       var movies = await _movieRepository.GetMoviesAsync();
 
       return new OkObjectResult(movies);
     }
-    [HttpGet("Movie/{id}")]
+    [HttpGet("{id}")]
     public async Task<ActionResult<GetMovieDto>> GetbyId(int id)
     {
       var movies = await _movieRepository.GetMovieAsync(id);
@@ -73,21 +73,21 @@ namespace MovieCharactersAPI.Controllers
 
 
     }
-    // [HttpPatch("{id}")]
+    [HttpPut("characters/{id}")]
 
-    // public async Task<ActionResult> UpdateMovieCharacter(int id, UpdateMovieCharacters updateMovieCharacters)
-    // {
-    //   try
-    //   {
-    //     var res = await _movieRepository.UpdateMovieCharacterAsync(id, updateMovieCharacters);
+    public async Task<ActionResult> UpdateMovieCharacter(int id, UpdateMovieCharacters updateMovieCharacters)
+    {
+      try
+      {
+        var res = await _movieRepository.UpdateMovieCharacterAsync(id, updateMovieCharacters);
 
-    //     return new OkObjectResult(res);
-    //   }
-    //   catch (System.Exception ex)
-    //   {
+        return new OkObjectResult(res);
+      }
+      catch (System.Exception ex)
+      {
 
-    //     return new NotFoundObjectResult(ex.Message);
-    //   }
-    // }
+        return new NotFoundObjectResult(ex.Message);
+      }
+    }
   }
 }

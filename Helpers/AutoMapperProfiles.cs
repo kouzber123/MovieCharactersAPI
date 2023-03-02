@@ -4,6 +4,7 @@ using MovieCharactersAPI.Data.DTOs.FranchiseDTOs;
 using MovieCharactersAPI.Data.DTOs.MoviesDTOs;
 using MovieCharactersAPI.Data.DTOs.MoviesDTOs.CreateMovieDTOs;
 using MovieCharactersAPI.Data.DTOs.MoviesDTOs.GetMovieDto;
+using MovieCharactersAPI.Data.DTOs.MoviesDTOs.UpdateMovie;
 using WebApplication1.Models;
 
 namespace MovieCharactersAPI.Models
@@ -35,12 +36,12 @@ namespace MovieCharactersAPI.Models
 
       CreateMap<UpdateMovieDto, GetMovieDto>().ReverseMap();
 
-      CreateMap<UpdateMovieDto, Movie>().ReverseMap()
-      .ForMember(dest => dest.characters, opt => opt.MapFrom(src => src.Characters));
+      CreateMap<UpdateMovieDto, Movie>().ReverseMap();
 
 
-      //   CreateMap<UpdateMovieCharacters, Movie>().ReverseMap()
-      //  .ForMember(dest => dest.Characters, opt => opt.MapFrom(src => src.Characters));
+      CreateMap<UpdateMovieCharacters, Movie>().ReverseMap()
+      .ForMember(dest => dest.Characters, opt => opt.MapFrom(src => src.Characters));
+
 
 
       CreateMap<FranchiseWithoutMoviesDTO, Franchise>().ReverseMap();

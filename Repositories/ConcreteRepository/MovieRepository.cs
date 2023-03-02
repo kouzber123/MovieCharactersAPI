@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieCharactersAPI.Data.DTOs.MoviesDTOs;
 using MovieCharactersAPI.Data.DTOs.MoviesDTOs.CreateMovieDTOs;
+using MovieCharactersAPI.Data.DTOs.MoviesDTOs.UpdateMovie;
 using MovieCharactersApp.Data.DataContext;
 using WebApplication1.Models;
 
@@ -18,126 +19,55 @@ namespace MovieCharactersAPI.Repositories.ConcreteRepository
       _dataContext = dataContext;
     }
 
-    // Updates a movie.
-    // public async Task<IActionResult> UpdateMovieCharacterAsync(int id, UpdateMovieCharacters updateMovieCharacters)
-    // {
-    //   var movie = await _dataContext.Movies.FindAsync(id);
-
-    //   if (movie == null)
-    //   {
-    //     return new NotFoundResult();
-    //   }
-    //   _mapper.Map(updateMovieCharacters, movie);
-
-    //   foreach (var character in updateMovieCharacters.Characters)
-    //   {
-    //     var existingCharacter = await _dataContext.Characters.FindAsync(character.Id);
-
-    //     if (existingCharacter != null)
-    //     {
-    //       _mapper.Map(character, existingCharacter);
-    //       movie.Characters.Add(existingCharacter);
-    //     }
-    //     else
-    //     {
-    //       var newCharacter = _mapper.Map(character, existingCharacter);
-    //       newCharacter.Id = 0;
-    //       _dataContext.Characters.Add(newCharacter);
-    //       movie.Characters.Add(newCharacter);
-    //     }
-    //   }//update
-    //   _dataContext.Entry(movie).State = EntityState.Modified;
-    //   await _dataContext.SaveChangesAsync();
-    //   return new OkObjectResult(_mapper.Map<Movie>(movie));
-    // }
-
-    // public async Task<IActionResult> UpdateMovieAsync(int id, UpdateMovieDto updateMovie)
-    // {
-    //   var movie = await _dataContext.Movies.FindAsync(id);
-
-    //   if (movie == null)
-    //   {
-    //     return new NotFoundResult();
-    //   }
-    //   _mapper.Map(updateMovie, movie);
-    //   var findId = updateMovie.characters.Select(i => i.Id).ToList();
-    //   // _mapper.Map(updateMovie, movie);
-    //   // var findId = updateMovie.characterWithoutMoviesDTO.Select(i => i.Id).ToList();
-    //   // var characters = await _dataContext.Characters.Where(c => c.Id == findId)
-
-    //   foreach (var character in updateMovie.characters)
-    //   {
-    //     var foundChar = await _dataContext.Characters.FindAsync(character.Id);
-
-    //     if (foundChar != null)
-    //     {
-    //       // _mapper.Map(character, foundChar);er;
-    //       _mapper.Map(character, foundChar);
-    //       movie.Characters.Add(foundChar);
-    //     }
-    //     else
-    //     {
-    //       var newCharacter = _mapper.Map<Character>(character);
-    //       newCharacter.FullName = character.FullName;
-    //       newCharacter.Id = 0;
-
-    //       _dataContext.Characters.Add(newCharacter);
-    //       movie.Characters.Add(newCharacter);
-    //     }
-    //   }
-
-    //   _dataContext.Entry(movie).State = EntityState.Modified;
-
-    //   // _dataContext.Movies.Update(movie);
-    //   await _dataContext.SaveChangesAsync();
-
-    //   return new OkObjectResult(_mapper.Map<GetMovieDto>(updateMovie));
-
-    // }
-
-    public async Task<IActionResult> UpdateMovieAsync(int id, UpdateMovieDto updateMovie)
+    // Updates a movie characters list.
+    public async Task<IActionResult> UpdateMovieCharacterAsync(int id, UpdateMovieCharacters updateMovieCharacters)
     {
-
-      var movie = await _dataContext.Movies.FindAsync(id);
-
+      var movie = await _dataContext.Movies.Include(c => c.Characters).FirstOrDefaultAsync(m => m.Id == id);
       if (movie == null)
       {
         return new NotFoundResult();
       }
-      _mapper.Map(updateMovie, movie);
-
-      var updatedMovie = _mapper.Map<Movie>(updateMovie); //reset list
-      updatedMovie.Characters = new List<Character>();
-
-      foreach (var character in updateMovie.characters)
+      foreach (var character in updateMovieCharacters.Characters)
       {
         var existingCharacter = await _dataContext.Characters.FindAsync(character.Id);
 
         if (existingCharacter != null)
         {
-          _mapper.Map(character, existingCharacter); //update exisitng character
-          updatedMovie.Characters.Add(existingCharacter);
+          movie.Characters.Add(existingCharacter);
+
+          if (character.FullName == null)
+          {
+            _mapper.Map(existingCharacter, existingCharacter);
+          }
+          else
+          {
+            _mapper.Map(character, existingCharacter);
+          }
         }
         else
         {
-          var newCharacter = _mapper.Map<Character>(character);
-          newCharacter.Id = 0;
-          _dataContext.Characters.Add(newCharacter);
-          updatedMovie.Characters.Add(newCharacter);
+          movie.Characters.Add(_mapper.Map<Character>(character));
         }
       }
-      // _mapper.Map(updatedMovie, movie);
-      movie.Characters = updatedMovie.Characters;
-      //update
-      // _dataContext.Update(movie);
       _dataContext.Entry(movie).State = EntityState.Modified;
       await _dataContext.SaveChangesAsync();
 
       return new OkObjectResult(_mapper.Map<GetMovieDto>(movie));
     }
 
-
-
+  //update movie detail
+    public async Task<IActionResult> UpdateMovieAsync(int id, UpdateMovieDto updateMovie)
+    {
+      var movie = await _dataContext.Movies.Include(c => c.Characters).FirstOrDefaultAsync(m => m.Id == id);
+      if (movie == null)
+      {
+        return new NotFoundResult();
+      }
+      _mapper.Map(updateMovie, movie);
+      _dataContext.Entry(movie).State = EntityState.Modified;
+      await _dataContext.SaveChangesAsync();
+      return new OkObjectResult(_mapper.Map<UpdateMovieDto>(movie));
+    }
 
     // Asynchronously creates a new movie.
     public async Task<IActionResult> CreateMovieAsync(CreateMovieDto movieDto)
@@ -185,7 +115,7 @@ namespace MovieCharactersAPI.Repositories.ConcreteRepository
     }
 
     // Deletes a single movie.
-    public async Task  DeleteMovieAsync(int id)
+    public async Task DeleteMovieAsync(int id)
     {
       var movie = await _dataContext.Movies.FirstOrDefaultAsync(x => x.Id == id);
 
@@ -193,9 +123,9 @@ namespace MovieCharactersAPI.Repositories.ConcreteRepository
       {
         _dataContext.Movies.Remove(movie);
         await _dataContext.SaveChangesAsync();
-        return new NotFoundResult();
+
       }
-      return new NoContentResult();
+
     }
 
     // Asynchronously returns a list of movies.
