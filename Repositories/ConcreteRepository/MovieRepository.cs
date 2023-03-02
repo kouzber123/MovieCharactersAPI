@@ -193,9 +193,9 @@ namespace MovieCharactersAPI.Repositories.ConcreteRepository
       {
         _dataContext.Movies.Remove(movie);
         await _dataContext.SaveChangesAsync();
-
+        return new NotFoundResult();
       }
-
+      return new NoContentResult();
     }
 
     // Asynchronously returns a list of movies.
