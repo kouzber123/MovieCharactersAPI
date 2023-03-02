@@ -3,14 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using MovieCharactersApp.Data.DataContext;
 using MovieCharactersApp.Data.DTOs.CharacterDTOs;
 using MovieCharactersApp.Repositories.InterfaceRepository;
-using MovieCharactersApp.Repositories.ConcreteRepository;
 using WebApplication1.Models;
 using MovieCharactersApp.Exceptions;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace MovieCharactersApp.Controllers
 {
-    [Route("api/[controller]")]
+  [Route("api/[controller]")]
     [ApiController]
     public class CharactersController : ControllerBase
     {

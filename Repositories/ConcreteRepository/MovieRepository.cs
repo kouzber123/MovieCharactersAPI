@@ -1,14 +1,14 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MovieCharactersApp.Data.DTOs.MoviesDTOs.CreateMovieDTOs;
 using MovieCharactersAPI.Data.DTOs.MoviesDTOs;
 using MovieCharactersApp.Data.DataContext;
+using MovieCharactersApp.Data.DTOs.MoviesDTOs.CreateMovieDTOs;
 using WebApplication1.Models;
 
 namespace MovieCharactersApp.Repositories.ConcreteRepository
 {
-    public class MovieRepository : IMovieRepository
+  public class MovieRepository : IMovieRepository
   {
     private readonly DataContext _dataContext;
     private readonly IMapper _mapper;
@@ -29,15 +29,12 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
       }
       _mapper.Map(updateMovie, movie);
       var findId = updateMovie.characterWithoutMoviesDTO.Select(i => i.Id).ToList();
-      // var characters = await _dataContext.Characters.Where(c => c.Id == findId)
-
       foreach (var character in updateMovie.characterWithoutMoviesDTO)
       {
         var foundChar = await _dataContext.Characters.FindAsync(character.Id);
 
         if (foundChar != null)
         {
-          // _mapper.Map(character, foundChar);er;
           _mapper.Map(character, foundChar);
           movie.Characters.Add(foundChar);
         }
@@ -49,14 +46,10 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
           movie.Characters.Add(newCharacter);
         }
       }
-
       _dataContext.Entry(movie).State = EntityState.Modified;
-
-      // _dataContext.Movies.Update(movie);
       await _dataContext.SaveChangesAsync();
 
       return new OkObjectResult(_mapper.Map<GetMovieDto>(updateMovie));
-
     }
 
     public async Task<GetMovieDto> CreateMovieAsync(CreateMovieDto movieDto)
@@ -90,9 +83,7 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
         else
         {
           var characters = _mapper.Map<Character>(movieDto.Characters);
-
           newMovie.Characters.Add(characters);
-
           newMovie.Franchise = _mapper.Map<Franchise>(movieDto.Franchise);
         };
       }
@@ -107,7 +98,7 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
 
 
     // Deletes a single movie.
-    public async Task<bool> DeleteMovieAsync(int id)
+    public async Task DeleteMovieAsync(int id)
     {
       var movie = await _dataContext.Movies.FirstOrDefaultAsync(x => x.Id == id);
 
@@ -115,11 +106,8 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
       {
         _dataContext.Movies.Remove(movie);
         await _dataContext.SaveChangesAsync();
-        return true;
       }
-      return false;
     }
-
     // Asynchronously returns a list of movies.
     public async Task<List<GetMovieDto>> GetMoviesAsync()
     {
@@ -128,7 +116,6 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
       .Include(f => f.Franchise)
       .ToListAsync();
 
-      //auto mapper way
       return _mapper.Map<List<GetMovieDto>>(movies);
     }
 

@@ -1,15 +1,13 @@
 ﻿using AutoMapper;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using MovieCharactersApp.Data.DataContext;
-using MovieCharactersApp.Data.DTOs.CharacterDTOs;
 using MovieCharactersApp.Exceptions;
 using MovieCharactersApp.Repositories.InterfaceRepository;
 using WebApplication1.Models;
 
 namespace MovieCharactersApp.Repositories.ConcreteRepository
 {
-    public class CharacterRepository : ICharacterRepository
+  public class CharacterRepository : ICharacterRepository
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;

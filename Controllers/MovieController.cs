@@ -29,7 +29,6 @@ namespace MovieCharactersApp.Controllers
     public async Task<ActionResult<GetMovieDto>> GetbyId(int id)
     {
       var movies = await _movieRepository.GetMovieAsync(id);
-      // var serialMovie = JsonSerializer.Serialize<MovieDto>(movies);
       return new OkObjectResult(movies);
     }
     [HttpPost("AddMovie")]
@@ -49,7 +48,6 @@ namespace MovieCharactersApp.Controllers
       }
       catch (ArgumentException ex)
       {
-
         return new NotFoundObjectResult(ex.Message);
       }
 
@@ -59,10 +57,6 @@ namespace MovieCharactersApp.Controllers
 
     public async Task<ActionResult> Update(int id, UpdateMovieDto updateMovieDto)
     {
-
-
-      // var movie = _mapper.Map<Movie>(moviedto);
-      // movie.Id = id;
       try
       {
         var res = await _movieRepository.UpdateMovieAsync(id,updateMovieDto);
@@ -74,8 +68,6 @@ namespace MovieCharactersApp.Controllers
 
         return new NotFoundObjectResult(ex.Message);
       }
-
-
     }
   }
 }
