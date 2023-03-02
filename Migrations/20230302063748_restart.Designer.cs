@@ -12,8 +12,8 @@ using MovieCharactersApp.Data.DataContext;
 namespace MovieCharactersApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230228113755_changedMovie")]
-    partial class changedMovie
+    [Migration("20230302063748_restart")]
+    partial class restart
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

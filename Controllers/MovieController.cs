@@ -1,11 +1,8 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MovieCharactersAPI.Data.DTOs.CharacterDTOs;
 using MovieCharactersAPI.Data.DTOs.MoviesDTOs;
 using MovieCharactersAPI.Data.DTOs.MoviesDTOs.CreateMovieDTOs;
 using MovieCharactersApp.Data.DataContext;
-using WebApplication1.Models;
 
 namespace MovieCharactersAPI.Controllers
 {
@@ -21,28 +18,28 @@ namespace MovieCharactersAPI.Controllers
       _movieRepository = movieRepository;
     }
 
-    [HttpGet("GetAll")]
+    [HttpGet("Movies")]
     public async Task<ActionResult<List<GetMovieDto>>> GetAll()
     {
       var movies = await _movieRepository.GetMoviesAsync();
 
       return new OkObjectResult(movies);
     }
-    [HttpGet("{id}")]
+    [HttpGet("Movie/{id}")]
     public async Task<ActionResult<GetMovieDto>> GetbyId(int id)
     {
       var movies = await _movieRepository.GetMovieAsync(id);
       // var serialMovie = JsonSerializer.Serialize<MovieDto>(movies);
       return new OkObjectResult(movies);
     }
-    [HttpPost("AddMovie")]
+    [HttpPost("Create")]
     public async Task<ActionResult<GetMovieDto>> AddMovie(CreateMovieDto movieDto)
     {
       var movie = await _movieRepository.CreateMovieAsync(movieDto);
       return new CreatedResult("AddMovie", movie);
     }
 
-    [HttpDelete("DeleteMovie/{id}")]
+    [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(int id)
     {
       try
@@ -58,17 +55,13 @@ namespace MovieCharactersAPI.Controllers
 
     }
 
-    [HttpPut("UpdateMovie/{id}")]
+    [HttpPut("{id}")]
 
     public async Task<ActionResult> Update(int id, UpdateMovieDto updateMovieDto)
     {
-
-
-      // var movie = _mapper.Map<Movie>(moviedto);
-      // movie.Id = id;
       try
       {
-        var res = await _movieRepository.UpdateMovieAsync(id,updateMovieDto);
+        var res = await _movieRepository.UpdateMovieAsync(id, updateMovieDto);
 
         return new OkObjectResult(res);
       }
@@ -80,5 +73,21 @@ namespace MovieCharactersAPI.Controllers
 
 
     }
+    // [HttpPatch("{id}")]
+
+    // public async Task<ActionResult> UpdateMovieCharacter(int id, UpdateMovieCharacters updateMovieCharacters)
+    // {
+    //   try
+    //   {
+    //     var res = await _movieRepository.UpdateMovieCharacterAsync(id, updateMovieCharacters);
+
+    //     return new OkObjectResult(res);
+    //   }
+    //   catch (System.Exception ex)
+    //   {
+
+    //     return new NotFoundObjectResult(ex.Message);
+    //   }
+    // }
   }
 }

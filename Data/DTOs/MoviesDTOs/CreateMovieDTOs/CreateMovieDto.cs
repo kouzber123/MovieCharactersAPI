@@ -12,7 +12,8 @@ namespace MovieCharactersAPI.Data.DTOs.MoviesDTOs.CreateMovieDTOs
 {
   public class CreateMovieDto
   {
-
+    [JsonIgnore]
+    public int Id { get; set; }
     [Required]
     [Column(TypeName = "nvarchar(100)")]
     public string Title { get; set; }
