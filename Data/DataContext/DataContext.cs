@@ -13,5 +13,8 @@ namespace MovieCharactersApp.Data.DataContext
     public DbSet<Character> Characters { get; set; }
     public DbSet<Movie> Movies { get; set; }
     public DbSet<Franchise> Franchises { get; set; }
-  }
+    public DbSet<CharacterMovie> CharacterMovies { get; set; }
+   
+
+    }
 }

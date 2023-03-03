@@ -71,5 +71,33 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
            
             return franchise;
         }
+
+        public async Task<List<FranchiseCharacterDto>>CharactersInFranchise(int id)
+        {
+            
+            var result = (from c in _context.Characters
+                          join mv in _context.CharacterMovies on c.Id equals mv.CharactersId
+                          join m in _context.Movies on mv.MoviesId equals m.Id
+                          join f in _context.Franchises on m.Id equals f.Id
+                          where f.Id == id
+                          select new
+                          {
+                              Franchise = f.Name,
+
+                              Id = c.Id,
+                              Fullname = c.FullName
+                          }).ToList();
+
+            foreach(var c in result)
+            {
+                
+           
+                _mapper.Map(c, FranchiseCharacter );
+            }
+
+            return result;
+        }
+
+
     }
 }
