@@ -62,7 +62,7 @@ namespace MovieCharactersApp.Controllers
         /// </summary>
 
         [HttpPost]
-        [ProducesResponseType(typeof(CreateFranchiseDto), 200)]
+        [ProducesResponseType(typeof(CreateFranchiseDto), 201)]
         public async Task<ActionResult<Franchise>> CreateFranchise(CreateFranchiseDto createFranchiseDto)
         {
             var franchise = _mapper.Map<Franchise>(createFranchiseDto);
@@ -72,10 +72,10 @@ namespace MovieCharactersApp.Controllers
         ///<summary>
         /// Delete Franchise by ID.
         /// </summary>
-        /// <response code="200">Query was successful</response>
+        /// <response code="204">Query was successful</response>
         /// <response code="404">Franchise not found</response>
         [HttpDelete("{id}")]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(204)]
         [ProducesResponseType(typeof(NotFoundResult), 404)]
         public async Task<IActionResult> DeleteFranchise(int id)
         {
@@ -98,10 +98,10 @@ namespace MovieCharactersApp.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <param name="editFranchiseDto"></param>
-        /// <response code="200">Query was successful</response>
+        /// <response code="204">Query was successful</response>
         /// <response code="404">Incorrect Id</response>
         [HttpPut]
-        [ProducesResponseType(typeof(EditFranchiseDto), 200)]
+        [ProducesResponseType(typeof(EditFranchiseDto), 204)]
         [ProducesResponseType(typeof(NotFoundResult), 404 )]
         public async Task<ActionResult> PutFranchise(int id, EditFranchiseDto editFranchiseDto)
         {
@@ -133,7 +133,7 @@ namespace MovieCharactersApp.Controllers
         /// <response code="200">Query was successful</response>
         /// <response code="404">Incorrect Id</response>
         [ProducesResponseType(typeof(FranchiseCharacterDto), 200)]
-        [ProducesResponseType(typeof(FranchiseNotFoundException), 404 )]
+        [ProducesResponseType(typeof(NotFoundResult), 404 )]
         [HttpGet("characters/{id}")]
         public async Task<ActionResult<FranchiseCharacterDto>> GetFranchiseCharacters(int id)
         {
