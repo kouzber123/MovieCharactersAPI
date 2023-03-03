@@ -1,7 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MovieCharactersAPI.Data.DTOs.MoviesDTOs;
+using MovieCharactersAPI.Data.DTOs.CharacterDTOs;
 using MovieCharactersAPI.Data.DTOs.MoviesDTOs.CreateMovieDTOs;
 using MovieCharactersAPI.Data.DTOs.MoviesDTOs.UpdateMovie;
 using MovieCharactersApp.Data.DataContext;
@@ -23,10 +23,9 @@ namespace MovieCharactersAPI.Repositories.ConcreteRepository
     public async Task<IActionResult> UpdateMovieCharacterAsync(int id, UpdateMovieCharacters updateMovieCharacters)
     {
       var movie = await _dataContext.Movies.Include(c => c.Characters).FirstOrDefaultAsync(m => m.Id == id);
-      if (movie == null)
-      {
-        return new NotFoundResult();
-      }
+
+      if (movie == null)  return new NotFoundResult();
+      
       foreach (var character in updateMovieCharacters.Characters)
       {
         var existingCharacter = await _dataContext.Characters.FindAsync(character.Id);
@@ -34,15 +33,15 @@ namespace MovieCharactersAPI.Repositories.ConcreteRepository
         if (existingCharacter != null)
         {
           movie.Characters.Add(existingCharacter);
-
-          if (character.FullName == null)
+          var updateDetails = new CharacterDto
           {
-            _mapper.Map(existingCharacter, existingCharacter);
-          }
-          else
-          {
-            _mapper.Map(character, existingCharacter);
-          }
+            Id = existingCharacter.Id,
+            FullName = character.FullName != null ? character.FullName : existingCharacter.FullName,
+            Alias = character.Alias != null ? character.Alias : existingCharacter.Alias,
+            Gender = character.Gender != null ? character.Gender : existingCharacter.Gender,
+            PictureUrl = character.PictureUrl != null ? character.PictureUrl : existingCharacter.Picture
+          };
+          _mapper.Map(updateDetails, existingCharacter);
         }
         else
         {
@@ -51,28 +50,34 @@ namespace MovieCharactersAPI.Repositories.ConcreteRepository
       }
       _dataContext.Entry(movie).State = EntityState.Modified;
       await _dataContext.SaveChangesAsync();
-
       return new OkObjectResult(_mapper.Map<GetMovieDto>(movie));
     }
 
-  //update movie detail
+    //update movie detail
     public async Task<IActionResult> UpdateMovieAsync(int id, UpdateMovieDto updateMovie)
     {
-      var movie = await _dataContext.Movies.Include(c => c.Characters).FirstOrDefaultAsync(m => m.Id == id);
-      if (movie == null)
+      var movie = await _dataContext.Movies.FindAsync(id);
+      if (movie == null) return new NotFoundResult();
+      
+      var upateDetails = new UpdateMovieDto
       {
-        return new NotFoundResult();
-      }
-      _mapper.Map(updateMovie, movie);
+        Title = updateMovie.Title != null ? updateMovie.Title : movie.Title,
+        Genre = updateMovie.Genre != null ? updateMovie.Genre : movie.Genre,
+        ReleaseYear = updateMovie.ReleaseYear != null ? updateMovie.ReleaseYear : movie.ReleaseYear,
+        Director = updateMovie.Director != null ? updateMovie.Director : movie.Director,
+        PictureUrl = updateMovie.PictureUrl != null ? updateMovie.PictureUrl : movie.PictureUrl,
+        TrailerUrl = updateMovie.TrailerUrl != null ? updateMovie.TrailerUrl : movie.TrailerUrl,
+      };
+      _mapper.Map(upateDetails, movie);
       _dataContext.Entry(movie).State = EntityState.Modified;
       await _dataContext.SaveChangesAsync();
       return new OkObjectResult(_mapper.Map<UpdateMovieDto>(movie));
     }
 
+
     // Asynchronously creates a new movie.
     public async Task<IActionResult> CreateMovieAsync(CreateMovieDto movieDto)
     {
-
       var existingCharacters = await _dataContext.Characters
       .Where(c => movieDto.Characters.Select(mc => mc.FullName).Contains(c.FullName))
       .ToListAsync();
@@ -81,31 +86,12 @@ namespace MovieCharactersAPI.Repositories.ConcreteRepository
       newMovie.Characters = new List<Character>(); // create empty list so we dont dublicate characters
 
       var existingFranchise = await _dataContext.Franchises.FirstOrDefaultAsync(f => f.Name == movieDto.Franchise.Name);
-      //check francshise
-      if (existingFranchise != null)
-      {
-        newMovie.Franchise = existingFranchise;
-      }
-      else
-      {
-        newMovie.Franchise = _mapper.Map<Franchise>(movieDto.Franchise);
-      }
-      //check characters
+      newMovie.Franchise = existingFranchise != null ? existingFranchise : _mapper.Map<Franchise>(movieDto.Franchise);
+
       foreach (var character in movieDto.Characters)
       {
         var existingCharacter = existingCharacters.FirstOrDefault(c => c.FullName == character.FullName);
-        if (existingCharacter != null)
-        {
-          newMovie.Characters.Add(existingCharacter);
-        }
-        else
-        {
-          var newCharacter = _mapper.Map<Character>(character);
-          newCharacter.Id = 0;
-          _dataContext.Characters.Add(newCharacter);
-          newMovie.Characters.Add(newCharacter);
-        }
-
+        newMovie.Characters.Add(existingCharacter != null ? existingCharacter : _mapper.Map<Character>(character));
       }
       _dataContext.Movies.Add(newMovie);
       await _dataContext.SaveChangesAsync();
@@ -123,7 +109,6 @@ namespace MovieCharactersAPI.Repositories.ConcreteRepository
       {
         _dataContext.Movies.Remove(movie);
         await _dataContext.SaveChangesAsync();
-
       }
 
     }
@@ -157,3 +142,4 @@ namespace MovieCharactersAPI.Repositories.ConcreteRepository
 
   }
 }
+

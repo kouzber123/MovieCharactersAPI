@@ -8,10 +8,9 @@ namespace MovieCharactersAPI.Data.DTOs.MoviesDTOs.UpdateMovie
   public class UpdateMovieDto
   {
 
-    [JsonIgnore]
-    public int Id { get; set; }
+    // [JsonIgnore]
+    // public int Id { get; set; }
 
-    [Required]
     [Column(TypeName = "nvarchar(100)")]
     public string Title { get; set; }
 
