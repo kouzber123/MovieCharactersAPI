@@ -18,7 +18,11 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
             _mapper = mapper;
         }
 
-        //Adds a character with the given character object
+        /// <summary>
+        /// Adds character 
+        /// </summary>
+        /// <param name="character"></param>
+        /// <returns>Character</returns>
         public async Task<Character> AddCharacter(Character character)
         {
             await _context.Characters.AddAsync(character);
@@ -26,7 +30,12 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
             return character;
         }
 
-        //Deletes a character with id given.
+        /// <summary>
+        /// Deletes a character with given id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>no content</returns>
+        /// <exception cref="CharacterNotFoundException"></exception>
         public async Task DeleteCharacter(int id)
         {
             var character = await _context.Characters.FindAsync(id);
@@ -38,13 +47,21 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
             await _context.SaveChangesAsync();
         }
 
-        //Gets all characters.
+        /// <summary>
+        /// Get's all characters 
+        /// </summary>
+        /// <returns>character list</returns>
         public async Task<IEnumerable<Character>> GetAllCharacters()
         {
             return await _context.Characters.Include(x => x.Movies).ThenInclude(m => m.Franchise).ToListAsync();
         }
 
-        //Get a character by its id.
+        /// <summary>
+        /// Get character by it's given id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>character</returns>
+        /// <exception cref="CharacterNotFoundException"></exception>
         public async Task<Character> GetCharacterById(int id)
         {
             var character = await _context.Characters.Include(x => x.Movies).FirstOrDefaultAsync(x => x.Id == id);
@@ -59,7 +76,12 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
             }
         }
 
-        //Updates a character with a given character object.
+        /// <summary>
+        /// Updates character
+        /// </summary>
+        /// <param name="character"></param>
+        /// <returns>character</returns>
+        /// <exception cref="CharacterNotFoundException"></exception>
         public async Task<Character> UpdateCharacter(Character character)
         {
             var oldCharacter = await _context.Characters.AnyAsync(x => x.Id == character.Id);
