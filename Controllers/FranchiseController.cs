@@ -9,7 +9,7 @@ using MovieCharactersApp.Repositories.InterfaceRepository;
 
 namespace MovieCharactersApp.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class FranchiseController : ControllerBase
     {
@@ -70,10 +70,10 @@ namespace MovieCharactersApp.Controllers
             return NoContent();
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<ActionResult> PutFranchise(int id, EditFranchiseDto editFranchiseDto)
         {
-            var franchise = _mapper.Map<Franchise>(editFranchiseDto);
+            var franchise = _mapper.Map<EditFranchiseDto>(editFranchiseDto);
 
             if (id != franchise.Id) return BadRequest();
 
@@ -94,6 +94,23 @@ namespace MovieCharactersApp.Controllers
 
 
         }
+
+        [HttpGet("characters/{id}")]
+        public async Task<ActionResult<FranchiseCharacterDto>> GetFranchiseCharacters(int id)
+        {
+            try
+            {
+                return Ok(_mapper.Map<FranchiseCharacterDto>(await _franchiseService.CharactersInFranchise(id)));
+            }
+            catch (FranchiseNotFoundException ex)
+            {
+                return NotFound(new ProblemDetails
+                {
+                    Detail = ex.Message
+                });
+            }
+        }
+
 
 
 

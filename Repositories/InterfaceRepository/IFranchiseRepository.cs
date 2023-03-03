@@ -1,5 +1,6 @@
 ﻿using MovieCharactersApp.Data.DTOs.CharacterDTOs;
-using MovieCharactersApp.Models;
+using MovieCharactersApp.Data.DTOs.FranchiseDTOs;
+using WebApplication1.Models;
 
 namespace MovieCharactersApp.Repositories.InterfaceRepository
 {
@@ -9,6 +10,7 @@ namespace MovieCharactersApp.Repositories.InterfaceRepository
         Task<Franchise> CreateFranchise(Franchise franchise);
         Task<Franchise> GetFranchiseById(int id);
         Task DeleteFranchise(int id);
-        Task<Franchise> UpdateFranchise(Franchise franchise);
+        Task<EditFranchiseDto> UpdateFranchise(EditFranchiseDto franchise);
+        Task<FranchiseCharacterDto> CharactersInFranchise(int id);
     }
 }

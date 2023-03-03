@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MovieCharactersApp.Data.DTOs.FranchiseDTOs;
-using MovieCharactersApp.Models;
+using WebApplication1.Models;
+using MovieCharactersApp.Data.DTOs.MoviesDTOs;
 
 namespace MovieCharactersApp.Profiles
 {
@@ -12,8 +13,14 @@ namespace MovieCharactersApp.Profiles
             CreateMap<Franchise, FranchiseDto>()
                 .ForMember(dto => dto.Movies, options =>
                 options.MapFrom(franchiseDomain => franchiseDomain.Movies.Select(movie => movie.Id).ToList()));
+                
             CreateMap<Franchise, EditFranchiseDto>()
-                .ReverseMap();
+                 .ForMember(dto => dto.Movies, options =>
+                options.MapFrom(franchiseDomain => franchiseDomain.Movies.Select(movie => movie.Id).ToList()));
+
+            CreateMap<Movie, FranchiseMovieDto>().ReverseMap();
+
+            CreateMap<FranchiseCharacterSingleDto, FranchiseCharacterDto>().ReverseMap();
 
         }
     }

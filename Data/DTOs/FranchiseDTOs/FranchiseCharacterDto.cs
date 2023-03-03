@@ -9,16 +9,16 @@ using WebApplication1.Models;
 namespace MovieCharactersApp.Data.DTOs.FranchiseDTOs
 {
 
-    public class EditFranchiseDto
+    public class FranchiseCharacterDto
     {
-        [Required]
-        public int Id { get; set; }
+        
+        public List<FranchiseCharacterSingleDto> Characters  { get; set; }
 
-        public string Name { get; set; }
+        
 
-        public string Description { get; set; }
 
-        public List<FranchiseMovieDto> Movies { get; set; }
+
+        
 
     }
 }
