@@ -5,6 +5,10 @@ namespace MovieCharactersApp.SwaggerExamples.Requests.CharacterRequest
 {
     public class UpdateCharacterRequest : IExamplesProvider<CharacterUpdateDto>
     {
+        /// <summary>
+        /// example text for swagger
+        /// </summary>
+        /// <returns></returns>
         public CharacterUpdateDto GetExamples()
         {
             return new CharacterUpdateDto

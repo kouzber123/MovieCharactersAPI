@@ -8,6 +8,10 @@ namespace MovieCharactersApp.SwaggerExamples.Responses.CharacterResponses
 {
   public class GetMoviesRequest : IExamplesProvider<List<CharacterReadDto>>
   {
+    /// <summary>
+    /// EXAMPLE TEXT FOR SWAGGER
+    /// </summary>
+    /// <returns></returns>
     public List<CharacterReadDto> GetExamples()
     {
       return new List<CharacterReadDto>

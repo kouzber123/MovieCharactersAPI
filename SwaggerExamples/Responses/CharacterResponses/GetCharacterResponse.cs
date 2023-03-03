@@ -9,6 +9,10 @@ namespace MovieCharactersApp.SwaggerExamples.Responses.CharacterResponses
 {
   public class GetCharacterResponse : IExamplesProvider<CharacterReadDto>
   {
+    /// <summary>
+    /// EXAMPLE TEXT FOR SWAGGER
+    /// </summary>
+    /// <returns></returns>
     public CharacterReadDto GetExamples()
     {
       return new CharacterReadDto

@@ -7,6 +7,11 @@ namespace Seed
 {
   public class Seed
   {
+    /// <summary>
+    /// READ JSON FILE TO SEED DATA TO DB
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
     public static async Task SeedCharacters(DataContext context)
     {
       if (await context.Characters.AnyAsync()) return;

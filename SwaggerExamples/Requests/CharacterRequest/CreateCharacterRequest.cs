@@ -6,6 +6,10 @@ namespace MovieCharactersApp.SwaggerExamples.Requests.CharacterRequest
 {
     public class CreateCharacterRequest : IExamplesProvider<CharacterCreateDto>
     {
+        /// <summary>
+        /// EXAMPLE TEXT FOR SWAGGER
+        /// </summary>
+        /// <returns></returns>
         public CharacterCreateDto GetExamples()
         {
             return new CharacterCreateDto

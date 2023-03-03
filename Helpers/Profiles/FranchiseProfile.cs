@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using MovieCharactersApp.Data.DTOs.FranchiseDTOs;
 using MovieCharactersApp.Models;
-using MovieCharactersApp.Data.DTOs.MoviesDTOs;
 
 namespace MovieCharactersApp.Profiles
 {
-    public class FranchiseProfile: Profile
+  /// <summary>
+  /// fransise profile mapper
+  /// </summary>
+  public class FranchiseProfile: Profile
     {
         public FranchiseProfile() 
         {

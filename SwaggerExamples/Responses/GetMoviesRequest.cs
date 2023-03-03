@@ -5,7 +5,10 @@ using Swashbuckle.AspNetCore.Filters;
 namespace MovieCharactersAPI.SwaggerExamples.Responses
 {
   public class GetMoviesRequest : IExamplesProvider<List<GetMovieDto>>
-  {
+  {  /// <summary>
+     /// EXAMPLE TEXT FOR SWAGGER
+     /// </summary>
+     /// <returns></returns>
     public List<GetMovieDto> GetExamples()
     {
       return new List<GetMovieDto>

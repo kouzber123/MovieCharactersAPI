@@ -11,6 +11,14 @@ namespace MovieCharactersApp.Extensions
   public static class ApplicationServicesExtensions
   {
 
+/// <summary>
+/// THIS FILE IS FRO SERVICES CONFIGURATION 
+/// add automapper
+///create openapi configs
+/// </summary>
+/// <param name="services"></param>
+/// <param name="config"></param>
+/// <returns></returns>
     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
     {
 

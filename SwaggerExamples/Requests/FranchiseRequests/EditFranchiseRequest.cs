@@ -5,6 +5,10 @@ namespace MovieCharactersAPI.SwaggerExamples.Requests
 {
     public class EditFranchiseRequest: IExamplesProvider<EditFranchiseDto>
     {
+        /// <summary>
+        /// EXAMPLE TEXT FOR SWAGGER 
+        /// </summary>
+        /// <returns></returns>
         public EditFranchiseDto GetExamples()
         {
             return new EditFranchiseDto

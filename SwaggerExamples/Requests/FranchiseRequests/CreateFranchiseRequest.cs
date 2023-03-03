@@ -7,6 +7,10 @@ namespace MovieCharactersAPI.SwaggerExamples.Requests
 {
     public class CreateFranchiseRequest: IExamplesProvider<CreateFranchiseDto>
     {
+        /// <summary>
+        /// EXAMPLE TEXT FOR SWAGGER
+        /// </summary>
+        /// <returns></returns>
         public CreateFranchiseDto GetExamples()
         {
             return new CreateFranchiseDto

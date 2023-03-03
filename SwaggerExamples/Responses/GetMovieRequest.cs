@@ -10,6 +10,10 @@ namespace MovieCharactersAPI.SwaggerExamples.Requests.MovieRequests
 {
   public class GetMovieRequest : IExamplesProvider<GetMovieDto>
   {
+    /// <summary>
+    /// EXAMPLE TEXT FOR SWAGGER
+    /// </summary>
+    /// <returns></returns>
     public GetMovieDto GetExamples()
     {
       return new GetMovieDto
