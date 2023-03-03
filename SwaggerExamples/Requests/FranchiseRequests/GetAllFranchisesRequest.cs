@@ -12,6 +12,7 @@ namespace MovieCharactersAPI.SwaggerExamples.Requests
                 Id = 1,
                 Name = "Marvels",
                 Description= "Legendary francise makes very woke movies box office is more over 1 dollar, and its multi dollar company"
+                
              };
   
         }
