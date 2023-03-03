@@ -14,7 +14,13 @@ namespace MovieCharactersApp.Data.DataContext
     public DbSet<Movie> Movies { get; set; }
     public DbSet<Franchise> Franchises { get; set; }
     public DbSet<CharacterMovie> CharacterMovies { get; set; }
-   
+
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<CharacterMovie>().HasKey(cm => new {cm.CharactersId, cm.MoviesId});
+        }
+
 
     }
 }

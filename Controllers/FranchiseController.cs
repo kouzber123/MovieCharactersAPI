@@ -96,11 +96,11 @@ namespace MovieCharactersApp.Controllers
         }
 
         [HttpGet("characters/{id}")]
-        public async Task<ActionResult<FranchiseDto>> GetFranchiseCharacters(int id)
+        public async Task<ActionResult<FranchiseCharacterDto>> GetFranchiseCharacters(int id)
         {
             try
             {
-                return Ok(_mapper.Map<FranchiseDto>(await _franchiseService.GetFranchiseById(id)));
+                return Ok(_mapper.Map<FranchiseCharacterDto>(await _franchiseService.CharactersInFranchise(id)));
             }
             catch (FranchiseNotFoundException ex)
             {

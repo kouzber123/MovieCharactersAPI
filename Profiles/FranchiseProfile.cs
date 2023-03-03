@@ -20,6 +20,8 @@ namespace MovieCharactersApp.Profiles
 
             CreateMap<Movie, FranchiseMovieDto>().ReverseMap();
 
+            CreateMap<FranchiseCharacterDto, Franchise>().ReverseMap();
+
         }
     }
 }

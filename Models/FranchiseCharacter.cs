@@ -6,14 +6,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace WebApplication1.Models
 {
-    public class CharacterMovie
+    public class FranchiseCharacter
     {
-        
-        public int CharactersId { get; set; }
-        
-        public int MoviesId { get; set; }
+
+        public string Franchise { get; set; }
+
+
+
+        public string FullName { get; set; }
 
     }
-   
-}
 
+}
