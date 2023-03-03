@@ -72,28 +72,34 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
             return franchise;
         }
 
-        public async Task<IEnumerable<FranchiseCharacterDto>> CharactersInFranchise(int id)
+        public async Task<FranchiseCharacterDto> CharactersInFranchise(int id)
         {
+            var franchise = await _context.Franchises.FindAsync(id);
+
+            var movies = await _context.Movies
+                .Include(c => c.Characters)
+                .Where(m => m.FranchiseId== id)
+                .ToListAsync();
 
 
 
 
-            var result =  await (from c in _context.Characters
-                                join mv in _context.CharacterMovies on c.Id equals mv.CharactersId
-                                join m in _context.Movies on mv.MoviesId equals m.Id
-                                join f in _context.Franchises on m.Id equals f.Id
-                                where f.Id == id
-                                select new
-                                {
-                                   // Franchise = f.Name,
 
+            var result = new FranchiseCharacterDto();
+            result.Characters = new List<FranchiseCharacterSingleDto>();
 
-                                    Fullname = c.FullName
-                                }).ToListAsync();
-            
+            var single = new FranchiseCharacterSingleDto();
 
+            foreach(var character in movies)
+            {
+                
+                single.Franchise = character.Franchise.Name;
+                single.Fullname =  character.Characters.Select(c => c.FullName);
+                result.Characters.Add(single);
+              
+                
 
-
+            }
 
             return result;
 

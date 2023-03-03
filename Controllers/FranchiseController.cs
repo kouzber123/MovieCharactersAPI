@@ -96,7 +96,7 @@ namespace MovieCharactersApp.Controllers
         }
 
         [HttpGet("characters/{id}")]
-        public async Task<ActionResult<IEnumerable<FranchiseCharacterDto>>> GetFranchiseCharacters(int id)
+        public async Task<ActionResult<FranchiseCharacterDto>> GetFranchiseCharacters(int id)
         {
             try
             {

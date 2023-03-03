@@ -16,7 +16,7 @@ namespace MovieCharactersApp.Data.DTOs.FranchiseDTOs
 
 
 
-        public string FullName { get; set; }
+        public IEnumerable<string> Fullname { get; set; }
 
 
     }
