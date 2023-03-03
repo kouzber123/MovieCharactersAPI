@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MovieCharactersAPI.Data.DTOs.MoviesDTOs.UpdateMovie;
+using MovieCharactersAPI.Exceptions;
 using MovieCharactersApp.Data.DataContext;
 using MovieCharactersApp.Data.DTOs.MoviesDTOs.CreateMovieDTOs;
 
@@ -34,9 +35,12 @@ namespace MovieCharactersApp.Controllers
         var movies = await _movieRepository.GetMoviesAsync();
         return new OkObjectResult(movies);
       }
-      catch (System.Exception m)
+      catch (MovieNotFoundException m)
       {
-        return new BadRequestObjectResult(m.Message);
+        return new BadRequestObjectResult(new ProblemDetails
+        {
+          Detail = m.Message
+        });
       }
     }
 
@@ -48,8 +52,8 @@ namespace MovieCharactersApp.Controllers
     /// <response code="404">Incorrect Id</response>
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(GetMovieDto), 200)]
-    [ProducesResponseType(typeof(NotFoundResult), 404 )]
-    public async Task<ActionResult<GetMovieDto>> GetbyId( int id)
+    [ProducesResponseType(typeof(NotFoundResult), 404)]
+    public async Task<ActionResult<GetMovieDto>> GetbyId(int id)
     {
       try
       {
@@ -80,9 +84,12 @@ namespace MovieCharactersApp.Controllers
         var movie = await _movieRepository.CreateMovieAsync(movieDto);
         return new CreatedResult("AddMovie", movie);
       }
-      catch (System.Exception m)
+      catch (MovieNotFoundException m)
       {
-        return new BadRequestObjectResult(m.Message);
+        return new BadRequestObjectResult(new ProblemDetails
+        {
+          Detail = m.Message
+        });
       }
 
     }
@@ -104,9 +111,9 @@ namespace MovieCharactersApp.Controllers
         await _movieRepository.DeleteMovieAsync(id);
         return new NoContentResult();
       }
-      catch (ArgumentException ex)
+      catch (MovieNotFoundException m)
       {
-        return new NotFoundObjectResult(ex.Message);
+        return new NotFoundObjectResult(m.Message);
       }
 
     }
@@ -121,7 +128,7 @@ namespace MovieCharactersApp.Controllers
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(UpdateMovieDto), 200)]
     [ProducesResponseType(typeof(NotFoundResult), 404)]
-    public async Task<ActionResult> Update(int id,  [FromBody] UpdateMovieDto updateMovieDto)
+    public async Task<ActionResult> Update(int id, [FromBody] UpdateMovieDto updateMovieDto)
     {
       try
       {
@@ -130,10 +137,13 @@ namespace MovieCharactersApp.Controllers
         return new OkObjectResult(result);
 
       }
-      catch (System.Exception ex)
+      catch (MovieNotFoundException m)
       {
 
-        return new NotFoundObjectResult(ex.Message);
+        return new NotFoundObjectResult(new ProblemDetails
+        {
+          Detail = m.Message
+        });
       }
     }
 
@@ -157,10 +167,13 @@ namespace MovieCharactersApp.Controllers
 
         return new OkObjectResult(res);
       }
-      catch (System.Exception ex)
+      catch (MovieNotFoundException m)
       {
 
-        return new NotFoundObjectResult(ex.Message);
+        return new NotFoundObjectResult(new ProblemDetails
+        {
+          Detail = m.Message
+        });
       }
     }
   }

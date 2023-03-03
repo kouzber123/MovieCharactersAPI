@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieCharactersAPI.Data.DTOs.MoviesDTOs.UpdateMovie;
+using MovieCharactersAPI.Exceptions;
 using MovieCharactersApp.Data.DataContext;
 using MovieCharactersApp.Data.DTOs.CharacterDTOs;
 using MovieCharactersApp.Data.DTOs.MoviesDTOs.CreateMovieDTOs;
@@ -19,12 +20,12 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
       _dataContext = dataContext;
     }
 
- /// <summary>
- /// Update movie characters, all else excluded
- /// </summary>
- /// <param name="id"></param>
- /// <param name="updateMovieCharacters"></param>
- /// <returns></returns>
+    /// <summary>
+    /// Update movie characters, all else excluded
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="updateMovieCharacters"></param>
+    /// <returns></returns>
     public async Task<IActionResult> UpdateMovieCharacterAsync(int id, UpdateMovieCharactersDto updateMovieCharacters)
     {
       var movie = await _dataContext.Movies.Include(c => c.Characters).FirstOrDefaultAsync(m => m.Id == id);
@@ -68,7 +69,7 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
     public async Task<IActionResult> UpdateMovieAsync(int id, UpdateMovieDto updateMovie)
     {
       var movie = await _dataContext.Movies.FindAsync(id);
-      if (movie == null) return new NotFoundResult();
+      if (movie == null) throw new MovieNotFoundException(id);
 
       var upateDetails = new UpdateMovieDto
       {
@@ -86,18 +87,20 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
     }
 
 
-  
-  /// <summary>
-  /// Create a movie, add existing characters and fransise if any
-  /// else create them
-  /// </summary>
-  /// <param name="movieDto"></param>
-  /// <returns></returns>
+
+    /// <summary>
+    /// Create a movie, add existing characters and fransise if any
+    /// else create them
+    /// </summary>
+    /// <param name="movieDto"></param>
+    /// <returns></returns>
     public async Task<IActionResult> CreateMovieAsync(CreateMovieDto movieDto)
     {
       var existingCharacters = await _dataContext.Characters
       .Where(c => movieDto.Characters.Select(mc => mc.FullName).Contains(c.FullName))
       .ToListAsync();
+
+      if (existingCharacters == null) throw new MovieNotFoundException(69);
 
       var newMovie = _mapper.Map<Movie>(movieDto);
       newMovie.Characters = new List<Character>(); // create empty list so we dont dublicate characters
@@ -117,11 +120,11 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
       return new CreatedAtRouteResult(nameof(CreateMovieAsync), newMovieDto);
     }
 
-/// <summary>
-/// Delete movie by id
-/// </summary>
-/// <param name="id"></param>
-/// <returns>no content</returns>
+    /// <summary>
+    /// Delete movie by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>no content</returns>
     public async Task DeleteMovieAsync(int id)
     {
       var movie = await _dataContext.Movies.FirstOrDefaultAsync(x => x.Id == id);
@@ -131,11 +134,15 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
         _dataContext.Movies.Remove(movie);
         await _dataContext.SaveChangesAsync();
       }
+      else
+      {
+        throw new MovieNotFoundException(id);
+      }
     }
-/// <summary>
-/// Get movies and its characters
-/// </summary>
-/// <returns></returns>
+    /// <summary>
+    /// Get movies and its characters
+    /// </summary>
+    /// <returns></returns>
     public async Task<List<GetMovieDto>> GetMoviesAsync()
     {
       var movies = await _dataContext.Movies
@@ -143,14 +150,16 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
       .Include(f => f.Franchise)
       .ToListAsync();
 
+      if (movies == null) throw new MovieNotFoundException(96);
+
       return _mapper.Map<List<GetMovieDto>>(movies);
     }
 
-   /// <summary>
-   /// Get a movie by id and return its details
-   /// </summary>
-   /// <param name="id"></param>
-   /// <returns></returns>
+    /// <summary>
+    /// Get a movie by id and return its details
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public async Task<GetMovieDto> GetMovieAsync(int id)
     {
 
@@ -158,6 +167,8 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
       .Include(c => c.Characters)
       .Include(f => f.Franchise)
       .FirstOrDefaultAsync(m => m.Id == id);
+
+      if (movie == null) throw new MovieNotFoundException(id);
 
       var movieMap = _mapper.Map<GetMovieDto>(movie);
       return movieMap;
