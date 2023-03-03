@@ -21,7 +21,10 @@ namespace MovieCharactersApp.Controllers
             _franchiseService= franchiseService;
             _mapper = mapper;
         }
-
+        /// <summary>
+        /// Returns list of Franchises
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<FranchiseDto>>> GetAllFranchises()
         {
