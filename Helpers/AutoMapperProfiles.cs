@@ -37,8 +37,8 @@ namespace MovieCharactersApp.Models
       CreateMap<UpdateMovieDto, GetMovieDto>().ReverseMap();
 
       CreateMap<UpdateMovieDto, Movie>().ReverseMap();
-   
-      CreateMap<UpdateMovieCharacters, Movie>().ReverseMap()
+
+      CreateMap<UpdateMovieCharactersDto, Movie>().ReverseMap()
       .ForMember(dest => dest.Characters, opt => opt.MapFrom(src => src.Characters));
 
 

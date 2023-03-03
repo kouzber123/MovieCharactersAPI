@@ -6,8 +6,6 @@ namespace MovieCharactersApp
 {
   public class CreateMovieCharacterDto
   {
-    [JsonIgnore]
-    public int Id { get; set; }
     public string FullName { get; set; }
 
     [Column(TypeName = "nvarchar(40)")]

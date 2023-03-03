@@ -20,12 +20,12 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
     }
 
     // Updates a movie characters list.
-    public async Task<IActionResult> UpdateMovieCharacterAsync(int id, UpdateMovieCharacters updateMovieCharacters)
+    public async Task<IActionResult> UpdateMovieCharacterAsync(int id, UpdateMovieCharactersDto updateMovieCharacters)
     {
       var movie = await _dataContext.Movies.Include(c => c.Characters).FirstOrDefaultAsync(m => m.Id == id);
 
-      if (movie == null)  return new NotFoundResult();
-      
+      if (movie == null) return new NotFoundResult();
+
       foreach (var character in updateMovieCharacters.Characters)
       {
         var existingCharacter = await _dataContext.Characters.FindAsync(character.Id);
@@ -58,7 +58,7 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
     {
       var movie = await _dataContext.Movies.FindAsync(id);
       if (movie == null) return new NotFoundResult();
-      
+
       var upateDetails = new UpdateMovieDto
       {
         Title = updateMovie.Title != null ? updateMovie.Title : movie.Title,

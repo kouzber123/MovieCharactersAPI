@@ -22,7 +22,6 @@ namespace MovieCharactersApp.Controllers
     /// <summary>
     /// Returns list of movies with characters and fransise
     /// </summary>
-    /// <returns>Ok object</returns>
     /// <response code="200">Query was successful</response>
     /// <response code="400">Bad request something went wrong</response>
     [HttpGet("List")]
@@ -45,13 +44,12 @@ namespace MovieCharactersApp.Controllers
     /// Find movie result from given id
     /// </summary>
     /// <param name="id"></param>
-    /// <returns>okobject result</returns>
     /// <response code="200">Query was successful</response>
     /// <response code="404">Incorrect Id</response>
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(GetMovieDto), 200)]
-    [ProducesResponseType(typeof(NotFoundResult), 404)]
-    public async Task<ActionResult<GetMovieDto>> GetbyId(int id)
+    [ProducesResponseType(typeof(NotFoundResult), 404 )]
+    public async Task<ActionResult<GetMovieDto>> GetbyId( int id)
     {
       try
       {
@@ -60,7 +58,6 @@ namespace MovieCharactersApp.Controllers
       }
       catch (System.Exception m)
       {
-
         return new NotFoundObjectResult(m.Message);
       }
     }
@@ -71,13 +68,12 @@ namespace MovieCharactersApp.Controllers
     /// else create new character and fransise to addtion to movie
     /// </summary>
     /// <param name="movieDto"></param>
-    /// <returns>CreateResult + content</returns>
     /// <response code="201">Creates movie in the database</response>
     /// <response code="400">Bad request when creating movie</response>
-    [HttpPost("Create")]
+    [HttpPost(template: "Create")]
     [ProducesResponseType(typeof(GetMovieDto), 201)]
     [ProducesResponseType(typeof(NotFoundResult), 404)]
-    public async Task<ActionResult<GetMovieDto>> AddMovie(CreateMovieDto movieDto)
+    public async Task<ActionResult<GetMovieDto>> AddMovie([FromBody] CreateMovieDto movieDto)
     {
       try
       {
@@ -95,13 +91,12 @@ namespace MovieCharactersApp.Controllers
     /// Takes ID of movie and deletes it,
     /// </summary>
     /// <param name="id"></param>
-    /// <returns>NoContentResult</returns>
     /// <response code="204">No content result, object deleted succesfully</response>
     /// <response code="404">Not found, id not correct</response>
 
     [HttpDelete("{id}")]
     [ProducesResponseType(typeof(NoContentResult), 204)]
-    [ProducesResponseType(typeof(NotFoundResult), 404)]
+    [ProducesResponseType(typeof(NotFoundResult), statusCode: 404)]
     public async Task<ActionResult> Delete(int id)
     {
       try
@@ -121,13 +116,12 @@ namespace MovieCharactersApp.Controllers
     /// </summary>
     /// <param name="id"></param>
     /// <param name="updateMovieDto"></param>
-    /// <returns>Ok object result</returns>
     /// <response code="200">Request was succesful</response>
     /// <response code="404">Not found, id not correct</response>
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(UpdateMovieDto), 200)]
     [ProducesResponseType(typeof(NotFoundResult), 404)]
-    public async Task<ActionResult> Update(int id, UpdateMovieDto updateMovieDto)
+    public async Task<ActionResult> Update(int id,  [FromBody] UpdateMovieDto updateMovieDto)
     {
       try
       {
@@ -150,13 +144,12 @@ namespace MovieCharactersApp.Controllers
     /// </summary>
     /// <param name="id"></param>
     /// <param name="updateMovieCharacters"></param>
-    /// <returns></returns>
     /// <response code="200">Request was succesful</response>
     /// <response code="404">Not found, id not correct</response>
     [HttpPut("Character/{Id}")]
-    [ProducesResponseType(typeof(UpdateMovieCharacters), 200)]
+    [ProducesResponseType(typeof(UpdateMovieCharactersDto), 200)]
     [ProducesResponseType(typeof(NotFoundResult), 404)]
-    public async Task<ActionResult> UpdateMovieCharacter(int id, UpdateMovieCharacters updateMovieCharacters)
+    public async Task<ActionResult> UpdateMovieCharacter(int id, [FromBody] UpdateMovieCharactersDto updateMovieCharacters)
     {
       try
       {

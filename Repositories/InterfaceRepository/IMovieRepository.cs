@@ -11,6 +11,6 @@ namespace MovieCharactersApp
     Task<IActionResult> CreateMovieAsync(CreateMovieDto MovieDto);
     Task DeleteMovieAsync(int id);
     Task<IActionResult> UpdateMovieAsync(int id, UpdateMovieDto movie);
-    Task<IActionResult> UpdateMovieCharacterAsync(int id, UpdateMovieCharacters movieCharacters);
+    Task<IActionResult> UpdateMovieCharacterAsync(int id, UpdateMovieCharactersDto movieCharacters);
   }
 }
