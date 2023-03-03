@@ -133,7 +133,7 @@ namespace MovieCharactersApp.Controllers
         /// <response code="200">Query was successful</response>
         /// <response code="404">Incorrect Id</response>
         [ProducesResponseType(typeof(FranchiseCharacterDto), 200)]
-        [ProducesResponseType(typeof(FranchiseNotFoundException), 404 )]
+        [ProducesResponseType(typeof(NotFoundResult), 404 )]
         [HttpGet("characters/{id}")]
         public async Task<ActionResult<FranchiseCharacterDto>> GetFranchiseCharacters(int id)
         {
