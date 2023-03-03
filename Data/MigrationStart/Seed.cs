@@ -1,7 +1,7 @@
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using MovieCharactersApp.Data.DataContext;
-using WebApplication1.Models;
+using MovieCharactersApp.Models;
 
 namespace Seed
 {

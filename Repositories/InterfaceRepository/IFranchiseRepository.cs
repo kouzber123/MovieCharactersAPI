@@ -1,5 +1,5 @@
 ﻿using MovieCharactersApp.Data.DTOs.CharacterDTOs;
-using WebApplication1.Models;
+using MovieCharactersApp.Models;
 
 namespace MovieCharactersApp.Repositories.InterfaceRepository
 {

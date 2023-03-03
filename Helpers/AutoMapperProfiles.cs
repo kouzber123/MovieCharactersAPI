@@ -5,7 +5,7 @@ using MovieCharactersApp.Data.DTOs.FranchiseDTOs;
 using MovieCharactersApp.Data.DTOs.MoviesDTOs;
 using MovieCharactersApp.Data.DTOs.MoviesDTOs.CreateMovieDTOs;
 using MovieCharactersApp.Data.DTOs.MoviesDTOs.GetMovieDto;
-using WebApplication1.Models;
+using MovieCharactersApp.Models;
 
 namespace MovieCharactersApp.Models
 {
