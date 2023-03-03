@@ -1,6 +1,6 @@
 ﻿using MovieCharactersApp.Data.DTOs.CharacterDTOs;
 using MovieCharactersApp.Data.DTOs.FranchiseDTOs;
-using WebApplication1.Models;
+using MovieCharactersApp.Models;
 
 namespace MovieCharactersApp.Repositories.InterfaceRepository
 {

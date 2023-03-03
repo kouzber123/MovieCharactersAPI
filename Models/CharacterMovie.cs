@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 
 
-namespace WebApplication1.Models
+namespace MovieCharactersApp.Models
 {
     public class CharacterMovie
     {
