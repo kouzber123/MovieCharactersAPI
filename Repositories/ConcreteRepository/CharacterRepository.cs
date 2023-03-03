@@ -18,6 +18,7 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
             _mapper = mapper;
         }
 
+        //Adds a character with the given character object
         public async Task<Character> AddCharacter(Character character)
         {
             await _context.Characters.AddAsync(character);
@@ -25,6 +26,7 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
             return character;
         }
 
+        //Deletes a character with id given.
         public async Task DeleteCharacter(int id)
         {
             var character = await _context.Characters.FindAsync(id);
@@ -36,11 +38,13 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
             await _context.SaveChangesAsync();
         }
 
+        //Gets all characters.
         public async Task<IEnumerable<Character>> GetAllCharacters()
         {
             return await _context.Characters.Include(x => x.Movies).ThenInclude(m => m.Franchise).ToListAsync();
         }
 
+        //Get a character by its id.
         public async Task<Character> GetCharacterById(int id)
         {
             var character = await _context.Characters.Include(x => x.Movies).FirstOrDefaultAsync(x => x.Id == id);
@@ -55,6 +59,7 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
             }
         }
 
+        //Updates a character with a given character object.
         public async Task<Character> UpdateCharacter(Character character)
         {
             var oldCharacter = await _context.Characters.AnyAsync(x => x.Id == character.Id);

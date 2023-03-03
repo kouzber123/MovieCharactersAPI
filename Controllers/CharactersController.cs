@@ -31,13 +31,13 @@ namespace MovieCharactersApp.Controllers
         /// <response code="200">Query was successful</response>
         /// <response code="400">Bad request</response>
         [HttpGet("GetAll")]
-        [ProducesResponseType(typeof(IEnumerable<CharacterReadDto>), 200)]
-        [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
-        public async Task<ActionResult<IEnumerable<CharacterReadDto>>> GetAllCharacters()
+        [ProducesResponseType(typeof(List<CharacterReadDto>), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 400)]
+        public async Task<ActionResult<List<CharacterReadDto>>> GetAllCharacters()
         {
             try
             {
-                return Ok(_mapper.Map<IEnumerable<CharacterReadDto>>(await _characterRepository.GetAllCharacters()));
+                return Ok(_mapper.Map<List<CharacterReadDto>>(await _characterRepository.GetAllCharacters()));
             }
             catch (System.Exception ex)
             {
@@ -55,7 +55,7 @@ namespace MovieCharactersApp.Controllers
         /// <response code="404">Character with that id was not found</response>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(CharacterReadDto), 200)]
-        [ProducesResponseType(typeof(NotFound), 400)]
+        [ProducesResponseType(typeof(NotFoundResult), 404)]
         public async Task<ActionResult<CharacterReadDto>> GetCharacterById(int id)
         {
             try
@@ -80,9 +80,9 @@ namespace MovieCharactersApp.Controllers
         /// <returns>CreatedAtAction</returns>
         /// /// <response code="200">Character was created in the database</response>
         /// <response code="400">Bad request</response>
-        [HttpPost("CreateCharacter")]
-        [ProducesResponseType(typeof(IEnumerable<CharacterReadDto>), 200)]
-        [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
+        [HttpPost("Create")]
+        [ProducesResponseType(typeof(CharacterReadDto), 201)]
+        [ProducesResponseType(typeof(BadRequestResult), 400)]
         public async Task<ActionResult<Character>> CreateCharacter(CharacterCreateDto characterCreateDto)
         {
             try
@@ -106,8 +106,8 @@ namespace MovieCharactersApp.Controllers
         /// <response code="204">Character deleted succesfully</response>
         /// <response code="404">No character found with the id</response>
         [HttpDelete("{id}")]
-        [ProducesResponseType(typeof(NoContent), 204)]
-        [ProducesResponseType(typeof(NotFound), 404)]
+        [ProducesResponseType(typeof(NoContentResult), 204)]
+        [ProducesResponseType(typeof(NotFoundResult), 404)]
         public async Task<IActionResult> DeleteCharacter(int id)
         {
             try
@@ -133,8 +133,8 @@ namespace MovieCharactersApp.Controllers
         /// <response code="204">Character updated succesfully</response>
         /// <response code="404">No character found with the id</response>
         [HttpPut("UpdateCharacter")]
-        [ProducesResponseType(typeof(NoContent), 204)]
-        [ProducesResponseType(typeof(NotFound), 404)]
+        [ProducesResponseType(typeof(NoContentResult), 204)]
+        [ProducesResponseType(typeof(NotFoundResult), 404)]
         public async Task<IActionResult> UpdateCharacter(CharacterUpdateDto characterUpdateDto)
         {
             var character = _mapper.Map<Character>(characterUpdateDto);
