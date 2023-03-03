@@ -2,7 +2,7 @@
 using MovieCharactersApp.Data.DataContext;
 using MovieCharactersApp.Data.DTOs.FranchiseDTOs;
 using MovieCharactersApp.Repositories.InterfaceRepository;
-using WebApplication1.Models;
+using MovieCharactersApp.Models;
 using MovieCharactersApp.Exceptions;
 
 

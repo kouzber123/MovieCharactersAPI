@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Models;
+using MovieCharactersApp.Models;
 using MovieCharactersApp.Data.DTOs.FranchiseDTOs;
 using AutoMapper;
 using MovieCharactersApp.Exceptions;

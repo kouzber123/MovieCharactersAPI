@@ -5,7 +5,7 @@ using MovieCharactersAPI.Data.DTOs.MoviesDTOs.UpdateMovie;
 using MovieCharactersApp.Data.DataContext;
 using MovieCharactersApp.Data.DTOs.CharacterDTOs;
 using MovieCharactersApp.Data.DTOs.MoviesDTOs.CreateMovieDTOs;
-using WebApplication1.Models;
+using MovieCharactersApp.Models;
 
 namespace MovieCharactersApp.Repositories.ConcreteRepository
 {

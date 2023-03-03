@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MovieCharactersApp.Data.DataContext;
 using MovieCharactersApp.Exceptions;
 using MovieCharactersApp.Repositories.InterfaceRepository;
-using WebApplication1.Models;
+using MovieCharactersApp.Models;
 
 namespace MovieCharactersApp.Repositories.ConcreteRepository
 {

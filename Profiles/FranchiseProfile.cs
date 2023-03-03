@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MovieCharactersApp.Data.DTOs.FranchiseDTOs;
-using WebApplication1.Models;
+using MovieCharactersApp.Models;
 
 namespace MovieCharactersApp.Profiles
 {

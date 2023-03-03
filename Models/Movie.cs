@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.InteropServices;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace WebApplication1.Models
+namespace MovieCharactersApp.Models
 {
   public class Movie
   {

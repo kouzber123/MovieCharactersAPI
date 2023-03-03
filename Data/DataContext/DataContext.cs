@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using MovieCharactersAPI.Models;
-using WebApplication1.Models;
+using MovieCharactersApp.Models;
 
 namespace MovieCharactersApp.Data.DataContext
 {
