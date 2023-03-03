@@ -19,6 +19,6 @@ namespace MovieCharactersApp.Data.DTOs.CharacterDTOs
 
     public string PictureUrl { get; set; }
 
-    public ICollection<MovieDto> Movies { get; set; }
+    public List<MovieDto> Movies { get; set; }
   }
 }

@@ -1,8 +1,6 @@
 
 
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
-
 namespace MovieCharactersApp.Data.DTOs.MoviesDTOs.GetMovieDto
 {
   public class FranchiseWithoutMoviesDTO

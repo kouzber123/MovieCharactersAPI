@@ -19,7 +19,12 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
       _dataContext = dataContext;
     }
 
-    // Updates a movie characters list.
+ /// <summary>
+ /// Update movie characters, all else excluded
+ /// </summary>
+ /// <param name="id"></param>
+ /// <param name="updateMovieCharacters"></param>
+ /// <returns></returns>
     public async Task<IActionResult> UpdateMovieCharacterAsync(int id, UpdateMovieCharactersDto updateMovieCharacters)
     {
       var movie = await _dataContext.Movies.Include(c => c.Characters).FirstOrDefaultAsync(m => m.Id == id);
@@ -53,7 +58,13 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
       return new OkObjectResult(_mapper.Map<GetMovieDto>(movie));
     }
 
-    //update movie detail
+
+    /// <summary>
+    /// Update movie and its content, characters and fransise excluded
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="updateMovie"></param>
+    /// <returns></returns>
     public async Task<IActionResult> UpdateMovieAsync(int id, UpdateMovieDto updateMovie)
     {
       var movie = await _dataContext.Movies.FindAsync(id);
@@ -75,7 +86,13 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
     }
 
 
-    // Asynchronously creates a new movie.
+  
+  /// <summary>
+  /// Create a movie, add existing characters and fransise if any
+  /// else create them
+  /// </summary>
+  /// <param name="movieDto"></param>
+  /// <returns></returns>
     public async Task<IActionResult> CreateMovieAsync(CreateMovieDto movieDto)
     {
       var existingCharacters = await _dataContext.Characters
@@ -100,7 +117,11 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
       return new CreatedAtRouteResult(nameof(CreateMovieAsync), newMovieDto);
     }
 
-    // Deletes a single movie.
+/// <summary>
+/// Delete movie by id
+/// </summary>
+/// <param name="id"></param>
+/// <returns>no content</returns>
     public async Task DeleteMovieAsync(int id)
     {
       var movie = await _dataContext.Movies.FirstOrDefaultAsync(x => x.Id == id);
@@ -111,7 +132,10 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
         await _dataContext.SaveChangesAsync();
       }
     }
-    // Asynchronously returns a list of movies.
+/// <summary>
+/// Get movies and its characters
+/// </summary>
+/// <returns></returns>
     public async Task<List<GetMovieDto>> GetMoviesAsync()
     {
       var movies = await _dataContext.Movies
@@ -122,7 +146,11 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
       return _mapper.Map<List<GetMovieDto>>(movies);
     }
 
-    // Get a movie.
+   /// <summary>
+   /// Get a movie by id and return its details
+   /// </summary>
+   /// <param name="id"></param>
+   /// <returns></returns>
     public async Task<GetMovieDto> GetMovieAsync(int id)
     {
 
@@ -131,7 +159,6 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
       .Include(f => f.Franchise)
       .FirstOrDefaultAsync(m => m.Id == id);
 
-      //auto mapper way
       var movieMap = _mapper.Map<GetMovieDto>(movie);
       return movieMap;
     }

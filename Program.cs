@@ -9,9 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//here is our  other services file
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddTransient<IFranchiseRepository, FranchiseRepository>();
 
@@ -38,6 +39,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+//try to read a json file and populate database with 10 movies, characters and fransises 
 using var scope = app.Services.CreateAsyncScope();
 var services = scope.ServiceProvider;
 try

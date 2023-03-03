@@ -11,6 +11,10 @@ namespace MovieCharactersApp.Models
 {
   public class AutoMapperProfiles : Profile
   {
+
+    /// <summary>
+    /// SET UP FOR AUTOMAPPER
+    /// </summary>
     public AutoMapperProfiles()
     {
 
@@ -22,9 +26,7 @@ namespace MovieCharactersApp.Models
        .ForMember(dest => dest.Characters, opt => opt.MapFrom(src => src.Characters))
        .ForMember(dest => dest.Franchise, opt => opt.MapFrom(src => src.Franchise));
 
-
       CreateMap<Character, CreateMovieCharacterDto>().ReverseMap();
-
       CreateMap<CharacterWithoutMoviesDTO, Character>().ReverseMap();
       CreateMap<List<CharacterWithoutMoviesDTO>, Character>().ReverseMap();
 

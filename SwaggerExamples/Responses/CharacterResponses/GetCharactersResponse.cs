@@ -6,11 +6,11 @@ using Swashbuckle.AspNetCore.Filters;
 
 namespace MovieCharactersApp.SwaggerExamples.Responses.CharacterResponses
 {
-        public class GetMoviesRequest : IExamplesProvider<List<CharacterReadDto>>
-        {
-            public List<CharacterReadDto> GetExamples()
-            {
-                return new List<CharacterReadDto>
+  public class GetMoviesRequest : IExamplesProvider<List<CharacterReadDto>>
+  {
+    public List<CharacterReadDto> GetExamples()
+    {
+      return new List<CharacterReadDto>
                 {
                     new CharacterReadDto
                     {
@@ -19,8 +19,8 @@ namespace MovieCharactersApp.SwaggerExamples.Responses.CharacterResponses
                         Alias = "007",
                         Gender = "Male",
                         Picture = "https://images.immediate.co.uk/production/volatile/sites/3/2021/09/daniel-craig-007.jpg-303a730.png",
-                        Movies = new List<Movie> {
-                        new Movie
+                        Movies = new List<GetMovieDto> {
+                        new GetMovieDto
                         {
                             Id = 23,
                             Title = "James bond",
@@ -29,17 +29,17 @@ namespace MovieCharactersApp.SwaggerExamples.Responses.CharacterResponses
                             Director = "James moan",
                             PictureUrl = "https://images.immediate.co.uk/production/volatile/sites/3/2021/09/daniel-craig-007.jpg-303a730.png",
                             TrailerUrl = "https://www.youtube.com/watch?v=BIhNsAtPbPI",
-                            Characters = new List<Character>
+                            Characters = new List<CharacterWithoutMoviesDTO>
                             {
-                                new Character
+                                new CharacterWithoutMoviesDTO
                                 {
                                     FullName = "James Bond",
                                     Gender = "Male",
-                                    Picture = "https://images.immediate.co.uk/production/volatile/sites/3/2021/09/daniel-craig-007.jpg-303a730.png"
+                                    PictureUrl = "https://images.immediate.co.uk/production/volatile/sites/3/2021/09/daniel-craig-007.jpg-303a730.png"
                                 }
                             },
                             FranchiseId = 15,
-                            Franchise = new Franchise
+                            Franchise = new FranchiseWithoutMoviesDTO
                             {
                                 Name = "James bond",
                                 Description = "Universe where james bond is based"
@@ -54,8 +54,8 @@ namespace MovieCharactersApp.SwaggerExamples.Responses.CharacterResponses
                         Alias = "007",
                         Gender = "Male",
                         Picture = "https://images.immediate.co.uk/production/volatile/sites/3/2021/09/daniel-craig-007.jpg-303a730.png",
-                        Movies = new List<Movie> {
-                        new Movie
+                        Movies = new List<GetMovieDto> {
+                        new GetMovieDto
                         {
                             Id = 23,
                             Title = "James bond",
@@ -64,17 +64,17 @@ namespace MovieCharactersApp.SwaggerExamples.Responses.CharacterResponses
                             Director = "James moan",
                             PictureUrl = "https://images.immediate.co.uk/production/volatile/sites/3/2021/09/daniel-craig-007.jpg-303a730.png",
                             TrailerUrl = "https://www.youtube.com/watch?v=BIhNsAtPbPI",
-                            Characters = new List<Character>
+                            Characters = new List<CharacterWithoutMoviesDTO>
                             {
-                                new Character
+                                new CharacterWithoutMoviesDTO
                                 {
                                     FullName = "James Bond",
                                     Gender = "Male",
-                                    Picture = "https://images.immediate.co.uk/production/volatile/sites/3/2021/09/daniel-craig-007.jpg-303a730.png"
+                                    PictureUrl = "https://images.immediate.co.uk/production/volatile/sites/3/2021/09/daniel-craig-007.jpg-303a730.png"
                                 }
                             },
                             FranchiseId = 15,
-                            Franchise = new Franchise
+                            Franchise = new FranchiseWithoutMoviesDTO
                             {
                                 Name = "James bond",
                                 Description = "Universe where james bond is based"
@@ -83,8 +83,8 @@ namespace MovieCharactersApp.SwaggerExamples.Responses.CharacterResponses
                         }
                     }
                 };
-     
-            }
-        }
+
     }
+  }
+}
 

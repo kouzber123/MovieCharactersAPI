@@ -19,6 +19,6 @@ namespace MovieCharactersApp.Data.DTOs.CharacterDTOs
         public string Gender { get; set; }
 
         public string Picture { get; set; }
-        public IEnumerable<Movie> Movies { get; set; }
+        public List<GetMovieDto> Movies { get; set; }
     }
 }
