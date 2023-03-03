@@ -13,8 +13,12 @@ namespace MovieCharactersApp.Profiles
             CreateMap<Franchise, FranchiseDto>()
                 .ForMember(dto => dto.Movies, options =>
                 options.MapFrom(franchiseDomain => franchiseDomain.Movies.Select(movie => movie.Id).ToList()));
+                
             CreateMap<Franchise, EditFranchiseDto>()
-                .ReverseMap();
+                 .ForMember(dto => dto.Movies, options =>
+                options.MapFrom(franchiseDomain => franchiseDomain.Movies.Select(movie => movie.Id).ToList()));
+
+            CreateMap<Movie, FranchiseMovieDto>().ReverseMap();
 
         }
     }

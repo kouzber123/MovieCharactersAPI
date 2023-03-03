@@ -29,6 +29,8 @@ namespace MovieCharactersApp.Extensions
 
       services.AddScoped<IMovieRepository, MovieRepository>();
 
+     services.AddScoped<IFranchiseRepository, FranchiseRepository>();
+
       //-------------AUTOMAPPER
       services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
       services.AddAutoMapper(typeof(AppDomain));
