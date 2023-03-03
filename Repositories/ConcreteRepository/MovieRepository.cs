@@ -22,6 +22,7 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
 
     /// <summary>
     /// Update movie characters, all else excluded
+    /// custom throw not found exception 
     /// </summary>
     /// <param name="id"></param>
     /// <param name="updateMovieCharacters"></param>
@@ -62,6 +63,7 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
 
     /// <summary>
     /// Update movie and its content, characters and fransise excluded
+    ///  custom throw not found exception 
     /// </summary>
     /// <param name="id"></param>
     /// <param name="updateMovie"></param>
@@ -91,6 +93,7 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
     /// <summary>
     /// Create a movie, add existing characters and fransise if any
     /// else create them
+    /// custom throw not found exception 
     /// </summary>
     /// <param name="movieDto"></param>
     /// <returns></returns>
@@ -100,7 +103,7 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
       .Where(c => movieDto.Characters.Select(mc => mc.FullName).Contains(c.FullName))
       .ToListAsync();
 
-      if (existingCharacters == null) throw new MovieNotFoundException(69);
+      if (existingCharacters == null) throw new MovieNotFoundException("Create");
 
       var newMovie = _mapper.Map<Movie>(movieDto);
       newMovie.Characters = new List<Character>(); // create empty list so we dont dublicate characters
@@ -122,6 +125,7 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
 
     /// <summary>
     /// Delete movie by id
+    /// custom throw not found exception 
     /// </summary>
     /// <param name="id"></param>
     /// <returns>no content</returns>
@@ -141,6 +145,7 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
     }
     /// <summary>
     /// Get movies and its characters
+    /// custom throw not found exception 
     /// </summary>
     /// <returns></returns>
     public async Task<List<GetMovieDto>> GetMoviesAsync()
@@ -150,13 +155,14 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
       .Include(f => f.Franchise)
       .ToListAsync();
 
-      if (movies == null) throw new MovieNotFoundException(96);
+      if (movies == null) throw new MovieNotFoundException("GET");
 
       return _mapper.Map<List<GetMovieDto>>(movies);
     }
 
     /// <summary>
     /// Get a movie by id and return its details
+    /// custom throw not found exception 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>

@@ -22,6 +22,7 @@ namespace MovieCharactersApp.Controllers
 
     /// <summary>
     /// Returns list of movies with characters and fransise
+    /// return bad request if fail
     /// </summary>
     /// <response code="200">Query was successful</response>
     /// <response code="400">Bad request something went wrong</response>
@@ -46,6 +47,7 @@ namespace MovieCharactersApp.Controllers
 
     /// <summary>
     /// Find movie result from given id
+    /// throw not found exception
     /// </summary>
     /// <param name="id"></param>
     /// <response code="200">Query was successful</response>
@@ -70,6 +72,7 @@ namespace MovieCharactersApp.Controllers
     /// Create new movie, 
     /// use existing character  and francsise if named
     /// else create new character and fransise to addtion to movie
+    /// return bad request if fail 
     /// </summary>
     /// <param name="movieDto"></param>
     /// <response code="201">Creates movie in the database</response>
@@ -96,6 +99,7 @@ namespace MovieCharactersApp.Controllers
 
     /// <summary>
     /// Takes ID of movie and deletes it,
+    ///  throw not found exception
     /// </summary>
     /// <param name="id"></param>
     /// <response code="204">No content result, object deleted succesfully</response>
@@ -120,6 +124,7 @@ namespace MovieCharactersApp.Controllers
 
     /// <summary>
     /// Update given movie id content
+    /// throw not found exception
     /// </summary>
     /// <param name="id"></param>
     /// <param name="updateMovieDto"></param>
@@ -150,6 +155,7 @@ namespace MovieCharactersApp.Controllers
     /// <summary>
     /// Update characters in a movie
     /// if character does not exist create new character and add it
+    /// throw not found exception
     /// or add existing character
     /// </summary>
     /// <param name="id"></param>
