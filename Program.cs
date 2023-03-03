@@ -1,10 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using MovieCharactersApp.Extensions;
 using MovieCharactersApp.Data.DataContext;
-using WebApplication1.Models;
-using MovieCharactersApp.Repositories.InterfaceRepository;
+using MovieCharactersApp.Extensions;
 using MovieCharactersApp.Repositories.ConcreteRepository;
-
+using MovieCharactersApp.Repositories.InterfaceRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,7 +1,6 @@
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using MovieCharactersApp.Data.DTOs.CharacterDTOs;
-using MovieCharactersApp.Data.DTOs.FranchiseDTOs;
 using MovieCharactersApp.Data.DTOs.MoviesDTOs.GetMovieDto;
 
 namespace MovieCharactersApp

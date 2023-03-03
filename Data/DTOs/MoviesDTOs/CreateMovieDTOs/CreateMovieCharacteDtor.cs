@@ -1,10 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace MovieCharactersApp
 {
   public class CreateMovieCharacterDto
   {
+    [JsonIgnore]
+    public int Id { get; set; }
     public string FullName { get; set; }
 
     [Column(TypeName = "nvarchar(40)")]

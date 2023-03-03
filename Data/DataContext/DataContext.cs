@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using MovieCharactersAPI.Models;
 using WebApplication1.Models;
 
 namespace MovieCharactersApp.Data.DataContext
@@ -8,10 +9,11 @@ namespace MovieCharactersApp.Data.DataContext
     public DataContext(DbContextOptions options) : base(options)
     {
     }
-    
+
 
     public DbSet<Character> Characters { get; set; }
     public DbSet<Movie> Movies { get; set; }
     public DbSet<Franchise> Franchises { get; set; }
+
   }
 }

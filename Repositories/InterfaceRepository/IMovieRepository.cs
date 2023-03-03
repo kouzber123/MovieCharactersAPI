@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using MovieCharactersAPI.Data.DTOs.MoviesDTOs;
+using MovieCharactersAPI.Data.DTOs.MoviesDTOs.UpdateMovie;
 using MovieCharactersApp.Data.DTOs.MoviesDTOs.CreateMovieDTOs;
 
 namespace MovieCharactersApp
@@ -8,8 +8,9 @@ namespace MovieCharactersApp
   {
     Task<List<GetMovieDto>> GetMoviesAsync();
     Task<GetMovieDto> GetMovieAsync(int id);
-    Task<GetMovieDto> CreateMovieAsync(CreateMovieDto MovieDto);
+    Task<IActionResult> CreateMovieAsync(CreateMovieDto MovieDto);
     Task DeleteMovieAsync(int id);
     Task<IActionResult> UpdateMovieAsync(int id, UpdateMovieDto movie);
+    Task<IActionResult> UpdateMovieCharacterAsync(int id, UpdateMovieCharacters movieCharacters);
   }
 }

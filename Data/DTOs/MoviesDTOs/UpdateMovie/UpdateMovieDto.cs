@@ -1,13 +1,13 @@
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using MovieCharactersApp.Data.DTOs.MoviesDTOs.GetMovieDto;
 
-namespace MovieCharactersAPI.Data.DTOs.MoviesDTOs
+namespace MovieCharactersAPI.Data.DTOs.MoviesDTOs.UpdateMovie
 {
   public class UpdateMovieDto
   {
 
-    [Required]
+    // [JsonIgnore]
+    // public int Id { get; set; }
+
     [Column(TypeName = "nvarchar(100)")]
     public string Title { get; set; }
 
@@ -22,6 +22,7 @@ namespace MovieCharactersAPI.Data.DTOs.MoviesDTOs
     public string PictureUrl { get; set; }
 
     public string TrailerUrl { get; set; }
-    public List<CharacterWithoutMoviesDTO> characterWithoutMoviesDTO { get; set; }
+
+    // public List<CharacterWithoutMoviesDTO> Characters { get; set; }
   }
 }
