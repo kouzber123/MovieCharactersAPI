@@ -40,8 +40,8 @@ namespace MovieCharactersApp.Controllers
         /// <response code="200">Query was successful</response>
         /// <response code="400">Bad request something went wrong</response>
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(FranchiseDto), 200)]
-        [ProducesResponseType(typeof(FranchiseNotFoundException), 404)]
+         [ProducesResponseType(typeof(FranchiseDto), 200)]
+        [ProducesResponseType(typeof(NotFoundResult), 400)]
         public async Task<ActionResult<FranchiseDto>> GetFranchiseById(int id)
         {
             try
@@ -76,7 +76,7 @@ namespace MovieCharactersApp.Controllers
         /// <response code="404">Franchise not found</response>
         [HttpDelete("{id}")]
         [ProducesResponseType(200)]
-        [ProducesResponseType(typeof(FranchiseNotFoundException), 404)]
+        [ProducesResponseType(typeof(NotFoundResult), 404)]
         public async Task<IActionResult> DeleteFranchise(int id)
         {
             try
@@ -102,7 +102,7 @@ namespace MovieCharactersApp.Controllers
         /// <response code="404">Incorrect Id</response>
         [HttpPut]
         [ProducesResponseType(typeof(EditFranchiseDto), 200)]
-        [ProducesResponseType(typeof(FranchiseNotFoundException), 404 )]
+        [ProducesResponseType(typeof(NotFoundResult), 404 )]
         public async Task<ActionResult> PutFranchise(int id, EditFranchiseDto editFranchiseDto)
         {
             var franchise = _mapper.Map<EditFranchiseDto>(editFranchiseDto);

@@ -18,6 +18,6 @@ namespace MovieCharactersApp.Data.DTOs.FranchiseDTOs
 
     public string Description { get; set; }
 
-    public List<MovieDto> Movies { get; set; }
+    public List<FranchiseMovieDto> Movies { get; set; }
   }
 }

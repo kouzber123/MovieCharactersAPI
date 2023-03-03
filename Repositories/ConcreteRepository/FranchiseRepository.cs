@@ -45,7 +45,7 @@ namespace MovieCharactersApp.Repositories.ConcreteRepository
             var franchise = await _context.Franchises.FindAsync(id);
             if (franchise == null) throw new FranchiseNotFoundException(id);
             _context.Franchises.Remove(franchise);
-            await _context.SaveChangesAsync();
+            // await _context.SaveChangesAsync();
         }
 
         public async Task<EditFranchiseDto> UpdateFranchise(EditFranchiseDto franchise)
