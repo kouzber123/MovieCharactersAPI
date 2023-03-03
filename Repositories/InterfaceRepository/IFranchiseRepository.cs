@@ -11,6 +11,6 @@ namespace MovieCharactersApp.Repositories.InterfaceRepository
         Task<Franchise> GetFranchiseById(int id);
         Task DeleteFranchise(int id);
         Task<EditFranchiseDto> UpdateFranchise(EditFranchiseDto franchise);
-        Task<List<FranchiseCharacterDto>> CharactersInFranchise(int id);
+        Task<IEnumerable<FranchiseCharacterDto>> CharactersInFranchise(int id);
     }
 }
